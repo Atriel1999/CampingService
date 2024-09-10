@@ -1,0 +1,222 @@
+a:link {
+   color: black;
+   text-decoration: none;
+ }
+
+ a:visited {
+   color: black;
+   text-decoration: none;
+ }
+
+ a:hover {
+   color: blue;
+   text-decoration: underline;
+ }
+
+ .xetemplate-v5-skin .xetemplate-v5-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list__link__date {
+  padding-left: 20px;
+}
+
+a.list__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ a.list__link .list__link__subject {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ .itemdetail .itemdetail__contents{
+  padding: 0 16px;
+  padding-bottom: 20px;
+  border-bottom: 10px solid #f1f1f1;
+}
+
+.itemdetail__content-box {
+  flex: 0 0 calc(50% - 100px);
+  margin: 0 20px;
+  margin-top: 0 !important;
+}
+
+.itemdetail__content-box__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gap);
+}
+
+.itemdetail__widget-section {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -20px;
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-strongColor);
+  background-color: #fff;
+  flex-direction: column;
+}
+
+.xe-widget-wrapper {
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+
+/*-------------------------
+		chat
+--------------------------*/
+
+
+.clock .ampm {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	font-size: 12px;
+}
+
+.chat_write {
+	display: flex;
+	position: relative;
+	align-items: center;
+	min-height: auto;
+	margin-left: 20px;
+	padding: 0;
+}
+
+.chat_box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #464646;
+	;
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+}
+
+.chat_button {
+	height: 2.3rem;
+	width: 2.3rem;
+	margin-left: 0.8rem;
+
+	background: #141414;
+	border: 1px solid rgba(134, 119, 90);
+	border-radius: 50px;
+	transition: all .1s;
+}
+
+.chatting {
+	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	width: 25rem;
+	height: 35rem;
+	position: relative;
+	margin-bottom: 0.5rem;
+	flex: 1 1;
+}
+
+.chatting::-webkit-scrollbar {
+	width: 10px;
+}
+
+.chatting::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.chatting::-webkit-scrollbar-track {
+	background-color: grey;
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
+.wrap {
+	padding: 10px 0;
+	background-color: #232321;
+}
+
+.wrap .chat {
+	display: flex;
+	align-items: flex-start;
+	padding: 10px;
+	position: relative;
+	bottom: 5px;
+}
+
+.wrap .chat .icon {
+	position: relative;
+	overflow: hidden;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #eee;
+}
+
+.wrap .chat .icon i {
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	font-size: 2.5rem;
+	color: #aaa;
+	transform: translateX(-50%);
+}
+
+.wrap .chat .textbox {
+	position: relative;
+	display: inline-block;
+	max-width: calc(100% - 70px);
+	padding: 10px;
+	margin-top: 7px;
+	font-size: 11px;
+	border-radius: 10px;
+}
+
+.wrap .chat .textbox::before {
+	position: absolute;
+	display: block;
+	top: 0;
+	font-size: 1.5rem;
+}
+
+.wrap .ch1 .textbox {
+	margin-left: 20px;
+	background-color: #ddd;
+}
+
+.wrap .ch1 .textbox::before {
+	left: -15px;
+	content: "◀";
+	color: #ddd;
+}
+
+.wrap .ch2 {
+	flex-direction: row-reverse;
+}
+
+.wrap .ch2 .textbox {
+	margin-right: 20px;
+	background-color: #F9EB54;
+}
+
+.wrap .ch2 .textbox::before {
+	right: -15px;
+	content: "▶";
+	color: #F9EB54;
+}
