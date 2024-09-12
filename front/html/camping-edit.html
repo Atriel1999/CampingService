@@ -178,69 +178,96 @@
         <section class="mx-n4 mx-xl-n5 mb-4 mb-xl-5">
           <!-- Slider main container-->
           <div class="swiper-container booking-detail-slider">
-            <!-- Additional required wrapper-->
-            <div class="swiper-wrapper">
-              <!-- Slides-->
-              <div class="swiper-slide"><img class="img-fluid" src="img/photo/photo-1426122402199-be02db90eb90.jpg"
-                  alt="Our street"></div>
-              <div class="swiper-slide"><img class="img-fluid" src="img/photo/photo-1512917774080-9991f1c4c750.jpg"
-                  alt="Outside"></div>
-              <div class="swiper-slide"><img class="img-fluid" src="img/photo/photo-1494526585095-c41746248156.jpg"
-                  alt="Rear entrance"></div>
-              <div class="swiper-slide"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg"
-                  alt="Kitchen"></div>
-              <div class="swiper-slide"><img class="img-fluid" src="img/photo/photo-1522771739844-6a9f6d5f14af.jpg"
-                  alt="Bedroom"></div>
-              <div class="swiper-slide"><img class="img-fluid" src="img/photo/photo-1488805990569-3c9e1d76d51c.jpg"
-                  alt="Bedroom"></div>
-            </div>
+            <section class="py-5">
+              <div class="container">
+                <p class="subtitle text-primary">대표 이미지를 보여주세요</p>
+                <h1 class="h2 mb-5"> 캠핑 사진</h1>
+                  <div class="col-lg-12 ms-auto">       
+                      <form class="dropzone" id="demo-upload" action="/upload">
+                        <div class="dz-message text-muted">
+                          <p>파일을 드래그하거나 여기를 클릭해서 업로드하세요</p>
+                        </div>
+                      </form>
+                    <div class="d-none" id="dropzoneTemplate">
+                      <div class="dz-preview dz-file-preview">
+                        <div class="dz-image"><img data-dz-thumbnail="" alt="" src="img/logo-square.svg"></div>
+                        <div class="dz-details">
+                          <div class="dz-filename"><span data-dz-name=""></span></div>
+                          <div class="dz-size" data-dz-size=""></div>
+                        </div>
+                        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div>
+                        <div class="dz-success-mark"><span class="dz-icon"><i class="fa-check fa"></i></span></div>
+                        <div class="dz-error-mark"><span class="dz-icon"><i class="fa-times fa"></i></span></div>
+                        <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </section>
+
+            
             <div class="swiper-pagination swiper-pagination-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div>
             <div class="swiper-button-next swiper-button-white"> </div>
           </div>
         </section>
-        <!-- Breadcrumbs -->
-        <ol class="breadcrumb ps-0  justify-content-start">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item"><a href="user-grid.html">캠핑 찾아보기</a></li>
-          <li class="breadcrumb-item active">카누 캠핑 하러 가실분</li>
-        </ol>
         <div class="text-block">
-          <p class="subtitle">월요일 11월 3일 - 화요일 11월 4일</p>
-          <h2 class="hero-heading mb-3">오토캠핑 - 카누 캠핑 하러 가실분</h2>
-        </div>
-        <div class="text-block">
-          <h6 class="mb-4">1박 2일</h6>
-          <div class="row mb-3">
-            <div class="col-md-6 d-flex align-items-center mb-3 mb-md-0">
-              <div class="date-tile me-3">
-                <div class="text-uppercase"> <span class="text-sm">11월</span><br><strong class="text-lg">17</strong>
-                </div>
-              </div>
-              <p class="text-sm mb-0">수요일 출발<br>14시</p>
+          <label class="form-label" for="form_search">캠핑이름</label>
+          <div class="input-label-absolute input-label-absolute-right mb-4">
+            <input class="form-control pe-4" type="search" name="search" placeholder="이름을 적어주세요" id="form_search">
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label" for="form_neighbourhood">캠핑종류</label>
+            <select class="selectpicker form-control" name="neighbourhood" id="form_neighbourhood" multiple data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" data-none-selected-text="">
+              <option value="neighbourhood_0">오토캠핑</option>
+              <option value="neighbourhood_1">백패킹</option>
+              <option value="neighbourhood_2">차박캠핑</option>
+              <option value="neighbourhood_3">미니멀캠핑</option>
+              <option value="neighbourhood_4">글램핑</option>
+            </select>
+          </div>
+          
+          <div class="row pt-4">
+            <div class="mb-4 col-md-4">
+              <label class="form-label" for="name">캠핑 시작년도</label>
+              <input class="form-control" type="text" name="name" id="name" value="2024">
             </div>
-            <div class="col-md-6 d-flex align-items-center">
-              <div class="date-tile me-3">
-                <div class="text-uppercase"> <span class="text-sm">11월</span><br><strong class="text-lg">18</strong>
-                </div>
-              </div>
-              <p class="text-sm mb-0">목요일 해산<br>11시</p>
+            <div class="mb-4 col-md-4">
+              <label class="form-label" for="name">월</label>
+              <input class="form-control" type="text" name="date" id="date" value="11">
+            </div>
+            <div class="mb-4 col-md-4">
+              <label class="form-label" for="name">일</label>
+              <input class="form-control" type="text" name="date" id="date" value="7">
+            </div>
+
+            <div class="mb-4 col-md-4">
+              <label class="form-label" for="name">캠핑 종료년도</label>
+              <input class="form-control" type="text" name="name" id="name" value="2024">
+            </div>
+            <div class="mb-4 col-md-4">
+              <label class="form-label" for="name">월</label>
+              <input class="form-control" type="text" name="date" id="date" value="11">
+            </div>
+            <div class="mb-4 col-md-4">
+              <label class="form-label" for="name">일</label>
+              <input class="form-control" type="text" name="date" id="date" value="8">
             </div>
           </div>
         </div>
-        <div class="text-block">
-          <div class="row">
-            <div class="col-sm">
-              <h6>주소지</h6>
-              <p class="text-muted">충주 카누 캠핑장</p>
-              <p class="text-muted">충청북도 충주시 동량면 지등로 1276-4</p>
-            </div>
-            <div class="col-sm">
-              <h6>전화번호</h6>
-              <p class="text-muted">010-1234-5678</p>
-            </div>
+
+        <div class="row pt-4">
+          <div class="mb-4 col-md-6">
+            <label class="form-label" for="name">주소지</label>
+            <input class="form-control" type="text" name="name" id="name" value="충주 카누 캠핑장">
+          </div>
+          <div class="mb-4 col-md-6">
+            <label class="form-label" for="name">전화번호</label>
+            <input class="form-control" type="text" name="date" id="date" value="010-1234-5678">
           </div>
         </div>
+
         <div class="text-block">
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
@@ -265,174 +292,55 @@
           <div class="row">
             <div class="col">
               <h6> 총 예상 지출금액</h6>
-              <p class="text-muted"> ₩433,000</p>
+              <div class="input-label-absolute input-label-absolute-right mb-4">
+                <input class="form-control pe-4" type="search" name="search" placeholder="₩" value="433000" id="form_search">
+              </div>
             </div>
           </div>
         </div>
-        <div class="text-block">
-          <h6 class="mb-4">주의사항</h6>
-          <ul class="list-unstyled">
-            <li class="mb-2">
-              <div class="d-flex align-items-center mb-3">
-                <div class="icon-rounded icon-rounded-sm bg-secondary-light flex-shrink-0 me-4"><i
-                    class="fa fas fa-child text-secondary fa-fw text-center"></i></div>
-                <div><span class="text-sm">아이들을 데려오기 부적합해요</span></div>
+        <div class="mb-4">
+          <label class="form-label">태그</label>
+          <ul class="list-unstyled mb-0">
+            <li>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="type_0" name="type[]">
+                <label class="form-check-label" for="type_0">미성년자 참여 가능</label>
               </div>
             </li>
-            <li class="mb-2">
-              <div class="d-flex align-items-center mb-3">
-                <div class="icon-rounded icon-rounded-sm bg-secondary-light flex-shrink-0 me-4"><i
-                    class="fa fas fa-glass-cheers text-secondary fa-fw text-center"></i></div>
-                <div><span class="text-sm">음주 가능</span></div>
+            <li>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="type_1" name="type[]">
+                <label class="form-check-label" for="type_1">음주 가능</label>
               </div>
             </li>
-            <li class="mb-2">
-              <div class="d-flex align-items-center mb-3">
-                <div class="icon-rounded icon-rounded-sm bg-secondary-light flex-shrink-0 me-4"><i
-                    class="fa fa-smoking-ban text-secondary fa-fw text-center"></i></div>
-                <div><span class="text-sm">흡연 금지</span></div>
+            <li>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="type_2" name="type[]">
+                <label class="form-check-label" for="type_2">흡연 가능</label>
               </div>
             </li>
-            <li class="mb-2">
-              <div class="d-flex align-items-center mb-3">
-                <div class="icon-rounded icon-rounded-sm bg-secondary-light flex-shrink-0 me-4"><i
-                    class="fa fa-cat text-secondary fa-fw text-center"></i></div>
-                <div><span class="text-sm">애완동물 금지</span></div>
+            <li>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="type_3" name="type[]">
+                <label class="form-check-label" for="type_3">애완동물 가능</label>
               </div>
             </li>
           </ul>
         </div>
 
         <div class="text-block">
-          <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
               <h6>세부설명</h6>
-              <p class="text-muted mb-0">1박 2일로 간단하게 다녀올 예정이며, 카누 체험해보고 저녁엔 술마시며 즐길분들 구해요. 오후 15:00 이후 카누 체험, 18:00 종료
-                이후 바베큐, 술 파티 예정 </p>
+              <form class="bg-light rounded shadow-sm" action="#">
+                <div class="input-group">
+                  <textarea class="form-control border-0 p-4 bg-light text-sm" placeholder="세부설명을 적으세요" aria-describedby="button-sendMessage"></textarea>
+                </div>
+              </form>
             </div>
-          </div>
         </div>
-
-        <!-- 채팅 -->
-        <!-- Chat Box-->
-        <div class="px-4 py-5" id="chatBox">
-          <div class="row">
-            <!-- Sender Message-->
-            <div class="d-flex col-md-9 col-xl-7 mb-3" id="chat""><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-1.jpg" alt="user">
-              <div class="ms-3">
-                <div class="bg-gray-200 rounded p-4 mb-2">
-                  <p class="text-sm mb-0">One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div>
-            </div>
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-            <!-- Sender Message-->
-            <div class="d-flex col-md-9 col-xl-7 mb-3" id="chat"><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-1.jpg" alt="user">
-              <div class="ms-3">
-                <div class="bg-gray-200 rounded p-4 mb-2">
-                  <p class="text-sm mb-0">His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table.</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div>
-            </div>
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test2</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-            <!-- Sender Message-->
-            <div class="d-flex col-md-9 col-xl-7 mb-3" id="chat"><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-1.jpg" alt="user">
-              <div class="ms-3">
-                <div class="bg-gray-200 rounded p-4 mb-2">
-                  <p class="text-sm mb-0">test</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div>
-            </div>
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test3</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-
-
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test3</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-            
-          </div>
-        </div>
-        <!-- 채팅 끝 -->
-        <!-- 채팅 입력창-->
-        <div class="input-group">
-          <textarea class="form-control border-0 p-4 bg-light text-sm" placeholder="메세지를 입력하세요" aria-describedby="button-sendMessage"></textarea>
-          <button class="btn btn-link" id="add" type="submit"><i class="fa fa-paper-plane"></i></button>
-        </div>
-
-        <script>
-          const chatBox = document.querySelector('#chatBox');
-          let chatIdx = 1;
-          let isScrollable = true;
-
-          document.querySelector('#add').addEventListener('click',()=>{
-              const div = document.createElement('div');
-              div.className='chat';
-              div.innerHTML = `<div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-                                  <div class="me-3">
-                                    <div class="bg-primary rounded p-4 mb-2">
-                                      <p class="text-sm mb-0 text-white">socket message</p>
-                                    </div>
-                                  <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-                                </div>
-                                <img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-                              </div>`;
-              chatBox.appendChild(div);
-
-              if(isScrollable) chatBox.scrollTop = 1e9;
-          })
-
-          chatBox.addEventListener('scroll', (e)=>{
-              const {scrollHeight, scrollTop, clientHeight} = e.target;
-
-              if(clientHeight + scrollTop < scrollHeight){
-                  isScrollable = false;
-                  return;
-              }
-              isScrollable = true;
-          })
-        </script>
-
-        <!--채팅 입력끝-->
 
         <div class="text-block d-print-none">
-          <button class="btn btn-link ps-0" onclick="window.print()"><i class="fa fa-print me-2"></i>출력하기 </button>
-          <button class="btn btn-link ps-0"><i class="fa fa-map-pin me-2"></i>공유하기 </button>
-          <button class="btn btn-link ps-0"><i class="fa fa-pen-fancy me-2"></i>수정하기 </button>
-          <li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary"
-              href="user-add-0.html">여행 종료하기</a></li>
+          <button class="btn btn-link ps-0"><i class="fa fa-pen-fancy me-2"></i>수정완료 </button>
         </div>
       </div>
       <div class="col-lg-5 col-xl-7 map-side-lg px-lg-0">
@@ -557,6 +465,9 @@
   <script>var basePath = ''</script>
   <!-- Main Theme JS file    -->
   <script src="js/theme.js"></script>
+  <!-- Dropzone.js-->
+    <script src="vendor/dropzone/dropzone.js"></script>
+    <!-- Dropzone Init-->
   <!-- Map-->
   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
     integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
