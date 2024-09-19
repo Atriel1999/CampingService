@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+<header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
+      <div class="container-fluid">
+        <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="index.html"><img src="img/camping_icon.png" alt="캠핑로고"></a>
+        </div>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+        <!-- Navbar Collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="homeDropdownMenuLink" href="index.html" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 캠핑 찾아보기</a>
+              <div class="dropdown-menu" aria-labelledby="homeDropdownMenuLink">
+                <a class="dropdown-item" href="index.html">오토캠핑<span class="badge badge-info-light ms-1 mt-n1">추천</span></a>
+                <a class="dropdown-item" href="index-2.html">백패킹</a>
+                <a class="dropdown-item" href="index-3.html">차박캠핑</a>
+                <a class="dropdown-item" href="index-4.html">미니멀캠핑</a>
+                <a class="dropdown-item" href="index-4.html">글램핑</a></div>
+            </li>
+
+            <li class="nav-item"><a class="nav-link" href="contact.html">캠핑 시작하기</a>
+            </li>
+
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle " id="docsDropdownMenuLink" href="index.html" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 여행게시판</a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="docsDropdownMenuLink">
+                <a class="dropdown-item" href="docs/docs-introduction.html">공지사항 </a>
+                <a class="dropdown-item" href="docs/docs-directory-structure.html">캠핑 질문 </a>
+                <a class="dropdown-item" href="docs/docs-gulp.html">캠핑 팁 </a>
+            </li>
+
+            <li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary" href="user-add-0.html">로그인</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  </th:block>
+</html>
+  <!-- 헤더-->
