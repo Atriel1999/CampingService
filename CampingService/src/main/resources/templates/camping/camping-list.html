@@ -8,21 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Price Slider Stylesheets -->
-    <link rel="stylesheet" href="vendor/nouislider/nouislider.css">
+    <link rel="stylesheet" th:href="@{/vendor/nouislider/nouislider.css}">
     <!-- Google fonts - Playfair Display-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700">
     <!-- Google fonts - Poppins-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
     <!-- swiper-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css}">
     <!-- Magnigic Popup-->
-    <link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" th:href="@{/vendor/magnific-popup/magnific-popup.css}">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -30,50 +31,16 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
   <body style="padding-top: 72px;">
-    <!-- 헤더-->
-    <header class="header">
-      <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
-        <div class="container-fluid">
-          <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="index.html"><img src="img/camping_icon.png" alt="캠핑로고"></a>
-          </div>
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-          <!-- Navbar Collapse -->
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="homeDropdownMenuLink" href="index.html" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   캠핑 찾아보기</a>
-                <div class="dropdown-menu" aria-labelledby="homeDropdownMenuLink">
-                  <a class="dropdown-item" href="index.html">오토캠핑<span class="badge badge-info-light ms-1 mt-n1">추천</span></a>
-                  <a class="dropdown-item" href="index-2.html">백패킹</a>
-                  <a class="dropdown-item" href="index-3.html">차박캠핑</a>
-                  <a class="dropdown-item" href="index-4.html">미니멀캠핑</a>
-                  <a class="dropdown-item" href="index-4.html">글램핑</a></div>
-              </li>
-
-              <li class="nav-item"><a class="nav-link" href="contact.html">캠핑 시작하기</a>
-              </li>
-
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle " id="docsDropdownMenuLink" href="index.html" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   여행게시판</a>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="docsDropdownMenuLink">
-                  <a class="dropdown-item" href="docs/docs-introduction.html">공지사항 </a>
-                  <a class="dropdown-item" href="docs/docs-directory-structure.html">캠핑 질문 </a>
-                  <a class="dropdown-item" href="docs/docs-gulp.html">캠핑 팁 </a>
-              </li>
-
-              <li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary" href="user-add-0.html">로그인</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <!-- 헤더-->
+    <!-- 헤더 시작 -->
+    <th:block th:replace="~{common/header :: headerFragment}"></th:block>
+    <!-- 헤더 끝 -->
+    
     <section class="py-5">
       <div class="container">
         <!-- Breadcrumbs -->
         <h1 class="hero-heading mb-4">캠핑 찾아보기</h1>
         <p class="text-muted mb-5">수많은 캠핑 중 당신에게 딱 맞는 인연을 찾아보세요</p>
-        <p class="mb-6"> <img class="img-fluid" src="img/illustration/undraw_trip_dv9f.svg" alt="" style="width: 400px;"></p>
+        <p class="mb-6"> <img class="img-fluid" th:src="@{/img/illustration/undraw_trip_dv9f.svg}" alt="" style="width: 400px;"></p>
 
         <div class="d-flex justify-content-between align-items-end mb-4">
           <div class="d-flex align-items-center">
@@ -86,227 +53,61 @@
           </div>
           <div>
             <label class="form-label me-2" for="form_sort">캠핑 종류</label>
-            <select class="selectpicker me-3 mb-3 mb-lg-0" name="sort" id="form_sort" data-style="btn-selectpicker" title="">
-              <option value="sortBy_0">오토캠핑 </option>
-              <option value="sortBy_1">백패킹 </option>
-              <option value="sortBy_2">차박캠핑 </option>
-              <option value="sortBy_2">미니멀캠핑 </option>
-              <option value="sortBy_2">글램핑 </option>
-            </select>
+            <select class="me-3 mb-3 mb-lg-0" id="sortBy" name="sortBy" data-style="btn-selectpicker" onchange="this.form.submit()">
+                <option value="sortBy_1" th:selected="${sortBy == 'sort1'}"> 오토캠핑 </option>
+	            <option value="sortBy_2" th:selected="${sortBy == 'sort2'}"> 백패킹</option>
+	            <option value="sortBy_3" th:selected="${sortBy == 'sort3'}"> 차박캠핑 </option>
+	            <option value="sortBy_4" th:selected="${sortBy == 'sort4'}"> 미니멀캠핑 </option>
+	            <option value="sortBy_5" th:selected="${sortBy == 'sort5'}"> 글램핑 </option>
+             </select>
           </div>
         </div>
-
+ 
         <div class="row">
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
+
+	        <th:block th:if="${list == null || #lists.size(list) == 0}">
+				<tr>
+					<td colspan="6">조회된 글이 없습니다.</td>
+				</tr>
+			</th:block>
+	
+		<th:block th:if="${list != null && #lists.size(list) != 0}">
+
+          <div th:each="listdata : ${list}" class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
             <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
+              <div class="card-img-top overflow-hidden"><a th:href="@{/camping/camping-single(cid=${listdata.cid}, siteid=${listdata.siteid})}"><img class="img-fluid" th:src="@{/img/photo/photo-1484154218962-a197022b5858.jpg}"/></a></div>
               <div class="card-body d-flex align-items-center">
                 <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
+                  <p class="subtitle fw-normal text-sm mb-2" th:text="${listdata.cstart}"></p>
+                  <h6 class="card-title"><a class="text-decoration-none text-dark" th:href="@{/camping/camping-single(cid=${listdata.cid}, siteid=${listdata.siteid})}" th:text="${listdata.cname}"></a></h6>
+                  <div class="d-flex card-subtitle mb-2" th:switch="${listdata.ctype}">
+                  <th:block th:case=1>
+                    <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="오토캠핑"></p>
+                  </th:block>
+                  <th:block th:case=2>
+                    <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="백패킹"></p>
+                  </th:block>
+                  <th:block th:case=3>
+                    <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="차박캠핑"></p>
+                  </th:block>
+                  <th:block th:case=4>
+                    <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="미니멀캠핑"></p>
+                    </th:block>
+                  <th:block th:case=5>
+                    <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="글램핑"></p>
+				  </th:block>
+                    
+                    <p class="flex-shrink-1 mb-0 text-dark text-sm" th:text="${listdata.username}"></p>
                   </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
+                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark" th:text="${listdata.ccomment}">!</p>
                 </div>
               </div>
             </div>
           </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <th:block> 
+          
 
         </div>
-
-        <h1 class="hero-heading mb-4">추천 캠핑</h1>
-
-        <div class="row">
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- place item-->
-          <div class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
-            <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a href="user-booking-detail.html"><img class="img-fluid" src="img/photo/photo-1484154218962-a197022b5858.jpg" alt="Modern, Well-Appointed Room"/></a></div>
-              <div class="card-body d-flex align-items-center">
-                <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2">11월 3일 2024</p>
-                  <h6 class="card-title"><a class="text-decoration-none text-dark" href="user-booking-detail.html">충주 카누 캠핑</a></h6>
-                  <div class="d-flex card-subtitle mb-2">
-                    <p class="flex-grow-1 mb-0 text-muted text-sm">오토캠핑</p>
-                    <p class="flex-shrink-1 mb-0 text-muted text-sm">닉네임 님</p>
-                  </div>
-                  <p class="flex-grow-1 mb-0 text-muted text-sm text-dark">재미있게 노실분 구해요!!</p>
-                </div>
-              </div>
-            </div>
-          </div>
       </div>
     </section>
     <!-- 푸터-->

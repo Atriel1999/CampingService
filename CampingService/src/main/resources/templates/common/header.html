@@ -4,7 +4,7 @@
 <header class="header">
     <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
       <div class="container-fluid">
-        <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="index.html"><img src="img/camping_icon.png" alt="캠핑로고"></a>
+        <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="index.html"><img th:src="@{/img/camping_icon.png}" alt="캠핑로고"></a>
         </div>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
         <!-- Navbar Collapse -->
@@ -31,7 +31,9 @@
                 <a class="dropdown-item" href="docs/docs-gulp.html">캠핑 팁 </a>
             </li>
 
-            <li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary" href="user-add-0.html">로그인</a></li>
+            <div class="d-grid gap-2 kakao-button">
+                <input type="button" class="btn img-kakao-middle">
+              </div>
           </ul>
         </div>
       </div>

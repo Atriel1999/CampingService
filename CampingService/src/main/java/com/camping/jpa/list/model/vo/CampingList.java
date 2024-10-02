@@ -1,47 +1,69 @@
 package com.camping.jpa.list.model.vo;
 
-import org.hibernate.annotations.ColumnDefault;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "CAMPINGLIST")
+@Entity(name = "CAMPING")
 @Transactional
 public class CampingList {
 	@Id
 	@Column(name = "CID")
-	public String cID;		// 캠핑고유번호
+	public int cid;		// 캠핑고유번호
 	@Column(name = "SITEID")
-	public String siteID;		// 캠핑장이름
+	public int siteid;		// 캠핑장이름
 	@Column(name = "CNAME")
-	public int cNAME;        // 캠핑이름
+	public String cname;        // 캠핑이름
 	@Column(name = "CPHONE")
-	public int cPHONE;        // 전화번호
+	public String cphone;        // 전화번호
 	@Column(name = "CPM")
-	public String cPM;      // 이동수단
+	public String cpm;      // 이동수단
 	@Column(name = "CEXPENSE")
-	public String cEXPENSE;      // 캠핑 총 비용
+	public String cexpense;      // 캠핑 총 비용
 	@Column(name = "CDETAIL")
-	public String cDETAIL;   // 캠핑 세부내용
+	public String cdetail;   // 캠핑 세부내용
 	@Column(name = "CCOMMENT")
-	public String cCOMMENT;     // 캠핑 코멘트
+	public String ccomment;     // 캠핑 코멘트
 	@Column(name = "CDRINK")
-	public String cDRINK;    // 음주가능여부
+	public int cdrink;    // 음주가능여부
 	@Column(name = "CPET")
-	public String cPET;      // 애완동물가능여부
+	public int cpet;      // 애완동물가능여부
 	@Column(name = "CCHILD")
-	public String cCHILD;      // 아이가능여부
+	public int cchild;      // 아이가능여부
 	@Column(name = "CSMOKING")
-	public String cSMOKING;     // 흡연여부
+	public int csmoking;     // 흡연여부
 	@Column(name = "CSTART")
-	public String cSTART;     // 시작일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date cstart;     // 시작일
 	@Column(name = "CEND")
-	public String cEND;         // 종료일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date cend;         // 종료일
+	@Column(name = "CTYPE")
+	public int ctype;
+	public String username;
+	
+	@OneToMany(mappedBy = "campinglist", fetch =FetchType.EAGER)
+	public List<CampingMember> campingmember = new ArrayList<>();
+	
+	
 }
