@@ -37,40 +37,18 @@
             <div class="mb-5"><img class="img-fluid mb-3" src="img/camping_icon.png" alt="..." style="max-width: 10rem;">
               <h2>환영합니다</h2>
             </div>
-            <form class="form-validate">
-              <div class="mb-4">
-                <label class="form-label" for="loginUsername"> 아이디</label>
-                <input class="form-control" name="loginUsername" id="loginUsername" type="text" placeholder="ID" autocomplete="off" required data-msg="아이디를 입력해주세요">
-              </div>
-              <div class="mb-4">
-                <div class="row">
-                  <div class="col">
-                    <label class="form-label" for="loginPassword"> 패스워드</label>
-                  </div>
-                  <div class="col-auto"><a class="form-text small text-primary" href="#">비밀번호 찾기</a></div>
-                </div>
-                <input class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
-              </div>
-              <div class="mb-4">
-                <div class="form-check">
-                  <input class="form-check-input" id="loginRemember" type="checkbox">
-                  <label class="form-check-label text-muted" for="loginRemember"> <span class="text-sm">30일간 로그인 정보 기억하기</span></label>
-                </div>
-              </div>
+              
               <!-- Submit-->
-              <div class="d-grid">
-                <button class="btn btn-lg btn-primary">로그인</button>
-              </div>
-              <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
+              
               <div class="d-grid gap-2 kakao-button">
                 <input type="button" class="btn img-kakao">
               </div>
-              <hr class="my-4">
-              <p class="text-center"><small class="text-muted text-center">계정이 아직 없으십니까? <a href="signup.html">회원가입</a></small></p>
-            </form><a class="close-absolute me-md-5 me-xl-6 pt-5" href="index.html"> 
-              <svg class="svg-icon w-3rem h-3rem">
-                <use xlink:href="#close-1"> </use>
-              </svg></a>
+              
+              <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
+              
+              <div class="d-grid">
+	              <button class="btn btn-lg" style="background-color: yellow" th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=40bc74c943b131d7790f9c7c71acf59e&redirect_uri=http://localhost/outh2/enroll/kakao}'|">카카오로 회원가입</button>
+              </div>
           </div>
         </div>
         <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block">
@@ -79,32 +57,7 @@
         </div>
       </div>
     </div>
-    <!-- JavaScript files-->
-    <script>
-      // ------------------------------------------------------- //
-      //   Inject SVG Sprite - 
-      //   see more here 
-      //   https://css-tricks.com/ajaxing-svg-sprite/
-      // ------------------------------------------------------ //
-      function injectSvgSprite(path) {
-      
-          var ajax = new XMLHttpRequest();
-          ajax.open("GET", path, true);
-          ajax.send();
-          ajax.onload = function(e) {
-          var div = document.createElement("div");
-          div.className = 'd-none';
-          div.innerHTML = ajax.responseText;
-          document.body.insertBefore(div, document.body.childNodes[0]);
-          }
-      }    
-      // to avoid CORS issues when viewing using file:// protocol, using the demo URL for the SVG sprite
-      // use your own URL in production, please :)
-      // https://demo.bootstrapious.com/directory/1-0/icons/orion-svg-sprite.svg
-      //- injectSvgSprite('${path}icons/orion-svg-sprite.svg'); 
-      injectSvgSprite('https://demo.bootstrapious.com/directory/1-4/icons/orion-svg-sprite.svg'); 
-      
-    </script>
+
     <!-- jQuery-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->

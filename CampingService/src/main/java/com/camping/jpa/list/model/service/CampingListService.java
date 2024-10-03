@@ -26,6 +26,7 @@ public class CampingListService {
 	private UserRepository repo;
 	@Autowired
 	private CampingListRepository repo2;
+	@Autowired
 	private final CampingSiteRepository repo3;
 	
 	public List<CampingList> findByOrderByCstartDesc() {

@@ -28,11 +28,7 @@ import lombok.ToString;
 public class User {
 	@Id
 	@Column(name = "USERNO")
-	public String userno;
-	@Column(name = "USERID")
-	public String userid;	
-	@Column(name = "USERPW")
-	public String userpw;       
+	public String userno;      
 	@Column(name = "USERNAME")
 	public String username;      
 	@Column(name = "USERPHONE")
@@ -46,6 +42,8 @@ public class User {
 	public String userrole;
 	@Column(name = "KAKAOTOKEN")
 	public String kakaotoken;
+	@Column(name = "userid")
+	public String userid;
 	
 	@OneToMany(mappedBy = "userlist", fetch =FetchType.EAGER)
 	public List<CampingMember> memberlist = new ArrayList<>();
