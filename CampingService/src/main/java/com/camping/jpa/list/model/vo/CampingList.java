@@ -1,6 +1,6 @@
 package com.camping.jpa.list.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +45,13 @@ public class CampingList {
 	@Column(name = "CCOMMENT")
 	public String ccomment;     // 캠핑 코멘트
 	@Column(name = "CDRINK")
-	public int cdrink;    // 음주가능여부
+	public boolean cdrink;    // 음주가능여부
 	@Column(name = "CPET")
-	public int cpet;      // 애완동물가능여부
+	public boolean cpet;      // 애완동물가능여부
 	@Column(name = "CCHILD")
-	public int cchild;      // 아이가능여부
+	public boolean cchild;      // 아이가능여부
 	@Column(name = "CSMOKING")
-	public int csmoking;     // 흡연여부
+	public boolean csmoking;     // 흡연여부
 	@Column(name = "CSTART")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date cstart;     // 시작일

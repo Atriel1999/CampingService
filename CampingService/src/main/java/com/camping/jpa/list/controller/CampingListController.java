@@ -1,6 +1,8 @@
 package com.camping.jpa.list.controller;
 
 import java.time.LocalDate;
+
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -15,15 +17,20 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.camping.jpa.list.model.service.CampingListService;
 import com.camping.jpa.list.model.vo.CampingList;
 import com.camping.jpa.list.model.vo.CampingMember;
 import com.camping.jpa.list.model.vo.CampingSite;
 import com.camping.jpa.list.model.vo.User;
+import com.camping.jpa.list.model.vo.CampingImage;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -32,7 +39,66 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/camping")
 public class CampingListController {
 	@Autowired
-	private CampingListService service;	
+	private CampingListService service;
+	
+	@GetMapping("/camping-edit")
+	public String updateView(Model model,
+			@SessionAttribute(name="loginMember", required = false) User loginMember,
+			@RequestParam(value = "cid") int cid, @RequestParam(value = "siteid") int siteid) {
+		CampingList camp = service.findByCid(cid);
+		CampingSite site = service.findBySiteid(siteid);
+		
+		User organizer = camp.getCampingmember().get(1).getUserlist();
+		
+		int size = camp.getCampingmember().size();
+		List<User> participant = new ArrayList<>();
+		if(size > 2) {
+			for(int i=0; i< size-2; i++) {
+				participant.add(camp.getCampingmember().get(i+2).getUserlist());
+			}
+		}
+		
+		model.addAttribute("camp",camp);
+		model.addAttribute("site",site);
+		model.addAttribute("organizer", organizer);
+		model.addAttribute("participant", participant);
+		return "/camping/camping-edit";
+	}
+	
+//	@PostMapping("/camping-edit")
+//	public String uploadCamping(Model model, ) {
+//		
+//		return "/camping-single";
+//	}
+	
+	@PostMapping("/camping-edit")
+	public String upload(@RequestParam(name = "file", required = false) List<MultipartFile> file, 
+						@ModelAttribute("campinglist") CampingList campinglist) {
+		log.info("uploaded file " + file);
+		log.info("dbg1 camping data: " + campinglist);
+		
+		List<CampingImage> CampingImageList = new ArrayList<CampingImage>();
+		
+		// 파일 저장 로직
+		for(MultipartFile upfile : file) {
+			if(upfile.getSize() == 0) {
+				continue;
+			}
+			String renamedFileName = service.saveFile(upfile); // 실제 파일 저장되는 로직
+			log.info("dbg2: renamefile: " + renamedFileName);
+			if(renamedFileName != null) {
+				CampingImage Imagefile = new CampingImage();
+				Imagefile.setCiimage(renamedFileName);
+				CampingImageList.add(Imagefile);
+			}
+		}
+		
+		
+		
+		return "/camping/camping-list";
+	}
+	
+	
 		
 	@GetMapping("/camping-list")
 	public String campingListLoading(Model model) {
@@ -90,8 +156,8 @@ public class CampingListController {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-		LocalDate date1 = camp.getCstart().toLocalDate();
-		LocalDate date2 = camp.getCend().toLocalDate();
+		LocalDate date1 = camp.getCstart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate date2 = camp.getCend().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		
 		long diff = ChronoUnit.DAYS.between(date1, date2);
 		

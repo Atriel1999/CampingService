@@ -42,8 +42,6 @@ public class User {
 	public String userrole;
 	@Column(name = "KAKAOTOKEN")
 	public String kakaotoken;
-	@Column(name = "userid")
-	public String userid;
 	
 	@OneToMany(mappedBy = "userlist", fetch =FetchType.EAGER)
 	public List<CampingMember> memberlist = new ArrayList<>();

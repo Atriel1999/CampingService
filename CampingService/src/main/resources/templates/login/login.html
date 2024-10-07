@@ -40,11 +40,11 @@
               
               <!-- Submit-->
               
-              <div class="d-grid gap-2 kakao-button">
-                <input type="button" class="btn img-kakao">
+              <div class="d-grid gap-2 kakao-button"> 
+                <input type="button" class="btn img-kakao" th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=40bc74c943b131d7790f9c7c71acf59e&redirect_uri=http://localhost/outh2/login/kakao}'|">
               </div>
               
-              <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
+              <hr class="my-3 hr-text letter-spacing-2" data-content="OR" >
               
               <div class="d-grid">
 	              <button class="btn btn-lg" style="background-color: yellow" th:onclick="|location.href='@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=40bc74c943b131d7790f9c7c71acf59e&redirect_uri=http://localhost/outh2/enroll/kakao}'|">카카오로 회원가입</button>
@@ -54,7 +54,7 @@
         <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block">
           <!-- Image-->
           <div class="bg-cover h-100 me-n3" style="background-image: url(img/photo/photo-1497436072909-60f360e1d4b1.jpg);"></div>
-        </div>
+        </div> 
       </div>
     </div>
 

@@ -37,19 +37,22 @@
             <div class="mb-5"><img class="img-fluid mb-3" th:src="@{/img/camping_icon.png}" alt="..." style="max-width: 10rem;">
               <h2>회원가입</h2>
             </div>
-            <form class="form-validate">
+            <form class="form-validate" id="enroll-container" name="form1" action="http://localhost/member/enroll" method="post">
             	<div class="mb-5"><img class="img-fluid mb-3" th:src="@{${kakaoMap.image}}" alt="..." style="max-width: 10rem;">
               <div class="mb-4">
+              <!-- 이름,전화번호,사진,가입일(컨트롤러), 권한(기본,컨트롤러),카카오토큰 -->
                 <label class="form-label" for="loginUsername"> 이름(닉네임)</label>
                 <input class="form-control" name="username" id="username" type="text" placeholder="이름" autocomplete="off" required data-msg="이름을 입력해주세요" th:value="${kakaoMap.nickname}">
                 <input type="button" id="checkDuplicate" value="중복검사" class="mt-2" th:onclick="checkDuplicated()">
               </div>
               <div class="mb-4">
                 <label class="form-label" for="loginPassword"> 전화번호</label>
-                <input class="form-control" name="tel" id="tel" placeholder="전화번호(- 제외)" type="text" required data-msg="전화번호 입력(ex:01012345678)">
+                <input class="form-control" name="userphone" id="userphone" placeholder="전화번호(- 제외)" type="text" required data-msg="전화번호 입력(ex:01012345678)">
+                <input type="hidden" name="userimage" th:value="${kakaoMap.image}">
+                <input type="hidden" name="kakaotoken" th:value="${kakaoMap.id}">
               </div>
               <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-primary" style="background-color: yellow" type="submit">카카오 회원가입</button>
+                <button class="btn btn-lg" style="background-color: yellow" type="submit">카카오 회원가입</button>
               </div>
               <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
               <div class="d-grid gap-2 kakao-button">

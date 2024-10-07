@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.camping.jpa.kakao.KaKaoService;
 import com.camping.jpa.list.controller.CampingListController;
+import com.camping.jpa.list.model.vo.User;
 import com.camping.jpa.member.model.service.MemberService;
 
 import lombok.extern.log4j.Log4j2;
@@ -53,6 +54,42 @@ public class MemberController {
 		
 		return "login/login";
 	}
+
+	
+	@GetMapping("/outh2/login/kakao")
+	public String kakaoLogin(Model model, @RequestParam("code") String code) {
+		log.info("로그인 요청");
+		if(code != null) {
+			try {
+				String loginUrl = "http://localhost/outh2/login/kakao";
+				String token = kakaoService.getToken(code, loginUrl);
+				Map<String, Object> map = kakaoService.getUserInfo(token);
+				String kakaoToken = (String) map.get("id");
+				User loginMember = service.loginKaKao(kakaoToken);
+				
+				if(loginMember != null) { // 로그인 성공
+					model.addAttribute("loginMember", loginMember); // 세션으로 저장되는 코드, 이유: @SessionAttributes
+					System.out.println("listdbg2(loginMember): " + loginMember);
+					return "redirect:/home";
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("msg", "로그인에 실패하였습니다.");
+		model.addAttribute("location","/login");
+		return "common/msg";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(SessionStatus status) { // status: 세션의 상태를 확인하는 인자
+		log.debug("status : " + status.isComplete()); // isComplete : 세션이 완료 되었는지
+		status.setComplete(); // 세션을 종료시키는 메소드
+		log.debug("status : " + status.isComplete()); 
+		return "redirect:/home";
+	}
+	
+		
 	
 	@GetMapping("/outh2/enroll/kakao")
 	public String enrollKakao(Model model, @RequestParam("code") String code) {
@@ -74,16 +111,37 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/idCheck")
-	public ResponseEntity<Map<String, Object>> idCheck(@RequestParam("id") String id){
+	public ResponseEntity<Map<String, Object>> idCheck(@RequestParam("id") String id) {
 		log.debug("아이디 중복 확인 : " + id);
-		
+
 		boolean validate = service.validate(id);
 		Map<String, Object> map = new HashMap<>();
 		map.put("validate", validate);
-		
-		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 	
+	@PostMapping("/member/enroll")
+	public String enroll(Model model, @ModelAttribute User member) { 
+		log.debug("회원가입 요청 member : " + member.toString());
+
+		int result = 0;
+		try {
+			result = service.save(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(result > 0) {
+			model.addAttribute("msg", "회원가입에 성공하였습니다.");
+			model.addAttribute("location", "/login");
+		} else {
+			model.addAttribute("msg", "회원가입에 실패하였습니다. 입력정보를 확인하세요.");
+			model.addAttribute("location", "/login");
+		}
+		
+		return "common/msg";
+	}
 	
 
 }
