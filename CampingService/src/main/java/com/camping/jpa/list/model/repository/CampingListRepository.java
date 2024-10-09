@@ -32,6 +32,16 @@ public interface CampingListRepository extends JpaRepository<CampingList, Intege
 	
 }
 
+
+//@Query("select e from EVENTCALENDAR e "
+//		+ " WHERE e.subtitle like CONCAT('%',:searchValue1,'%')"
+//		+ " AND e.sido like CONCAT('%',:searchValue2,'%')"
+//		+ " AND e.gugun like CONCAT('%',:searchValue3,'%')"
+//		+ " AND ((e.sdate <= CAST(:searchValue4 AS integer) AND e.edate >= CAST(:searchValue4 AS integer)) OR CAST(:searchValue4 AS integer)<100)")
+//Page<EventCalendar> findBysearchValueContaining(@Param("searchValue1") String searchValue1,@Param("searchValue2") String searchValue2,
+//		@Param("searchValue3") String searchValue3,@Param("searchValue4") String searchValue4, Pageable pageable);
+//
+
 //@Query("select c.cname, c.ccomment, c.cstart, c.ctype, u.userid from CAMPING c"
 //		+ " LEFT JOIN c.campingmember m"   // AND m.caauth = '1'
 //		+ " RIGHT JOIN m.userlist u"

@@ -137,6 +137,10 @@
               <!-- Slides-->
               <div class="swiper-slide"><img class="img-fluid" th:src="@{${site.siteimage}}"
                   alt="Main image"></div>
+                  
+              <div class="swiper-slide" th:each="listimage : ${image}" style="height:208px;">
+              	<img class="img-fluid" th:src="@{${listimage.ciimage}}" alt="sub image">
+              </div>
 
             </div>
             <div class="swiper-pagination swiper-pagination-white"></div>

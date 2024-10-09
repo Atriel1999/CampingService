@@ -9,10 +9,13 @@
 <body>
 	<script>
 		// 알림메세지를 띄움
+		
 		alert("[[${msg}]]");
 
 		// 페이지 이동
-		location.replace("..[[${location}]]");
+		var link = "..[[${location}]]";
+		link = link.replaceAll('&amp;', '&');
+		location.replace(link);
 	</script>
 </body>
 </html>

@@ -8,6 +8,33 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
+  
+   <!-- jQuery-->
+   <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+   <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
+   <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+   <!-- Magnific Popup - Lightbox for the gallery-->
+   <script th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
+   <!-- Smooth scroll-->
+   <script th:src="@{/vendor/smooth-scroll/smooth-scroll.polyfills.min.js}"></script>
+   <!-- Bootstrap Select-->
+   <script th:src="@{/vendor/bootstrap-select/js/bootstrap-select.min.js}"></script>
+   <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
+   <script th:src="@{/vendor/object-fit-images/ofi.min.js}"></script>
+   <!-- Swiper Carousel                       -->
+   <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js}"></script>
+   <script>var basePath = ''</script>
+   <!-- Main Theme JS file    -->
+   <script th:src="@{/js/theme.js}"></script>
+  <!-- Dropzone.js-->
+   <script th:src="@{/vendor/dropzone/dropzone.js}"></script>
+   <!-- Dropzone Init-->
+  <!-- Map-->
+  <script th:src="@{https://unpkg.com/leaflet@1.5.1/dist/leaflet.js}"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
+  <!-- Available tile layers-->
+  
   <!-- Price Slider Stylesheets -->
     <link rel="stylesheet" th:href="@{/vendor/nouislider/nouislider.css}">
     <!-- Google fonts - Playfair Display-->
@@ -116,6 +143,7 @@
   <!-- 헤더 시작 -->
     <th:block th:replace="common/header :: headerFragment"></th:block>
   <!-- 헤더 끝 -->
+  <!-- dropzone 임시 <input name="file" type="file" style="display:none" multiple/> -->
   
   <div class="container-fluid">
   <form th:action="@{/camping/camping-edit}" method="POST" enctype="multipart/form-data">
@@ -126,17 +154,15 @@
           <div class="swiper-container booking-detail-slider">
             <section class="py-5">
               <div class="container">
-                <p class="subtitle text-primary">대표 이미지를 보여주세요</p>
                 <h1 class="h2 mb-5"> 캠핑 사진</h1>
-                  <div class="col-lg-12 ms-auto">       
+                <p class="subtitle text-primary mb-2">대표 이미지를 보여주세요</p>
+                  <div class="col-lg-12 ms-auto" runat="server">       
                   	  <!-- 파일 업로드 -->
-                      <div class="dropzone" id="demo-upload" th:action="@{/camping/camping-edit}">
+                      <div class="dropzone" id="demo-upload" action="#">
                         <div class="dz-message text-muted">
-                        	<br>
                         	<p>파일을 드래그하거나 여기를 클릭해서 업로드하세요</p>
-							<input name="file" type="file" style="display:none" multiple/>
                         </div>
-                      </form>
+                      </div>
                     <div class="d-none" id="dropzoneTemplate">
                       <div class="dz-preview dz-file-preview">
                         <div class="dz-image"><img data-dz-thumbnail="" alt="" th:src="@{/img/logo-square.svg}"></div>
@@ -166,6 +192,7 @@
           <label class="form-label" for="form_search">캠핑이름</label>
           <div class="input-label-absolute input-label-absolute-right mb-4">
           	<input type="hidden" name="cid" id="cid" th:value="${camp.cid}">
+          	<input type="hidden" name="siteid" id="siteid" th:value="${site.siteid}">
             <input class="form-control pe-4" type="search" name="cname" placeholder="이름을 적어주세요" id="cname" th:value="${camp.cname}">
           </div>
           
@@ -280,7 +307,7 @@
         </div>
 
         <div class="text-block d-print-none">
-          <button id="btn-upload" class="btn btn-link ps-0" type="submit"><i class="fa fa-pen-fancy me-2"></i>수정완료 </button>
+          <button id="btn-upload" class="btn btn-link ps-0" type="submit"><i class="fa fa-pen-fancy me-2"></i>수정완료! </button>
         </div>
         </form>
       </div>
@@ -297,40 +324,42 @@
     <th:block th:replace="~{common/footer :: footerFragment}"></th:block>
   <!--푸터-->
   <!-- JavaScript files-->
-  
-  	<script type="text/javascript">
+  	<script>
       Dropzone.autoDiscover = false;
-      var myDropzone = new Dropzone("#demo-upload", {
+      $("#demo-upload").dropzone({
         url: '/camping/camping-edit', // 파일 업로드할 url
-
+		method: "post",
+		autoProcessQueue: false,
+		maxFilesize: 10,
+		parallelUploads: 5,
+        paramName: 'file',
+		params: {'param_1':[[${camp.cid}]]},
+		clickable: true,
+		acceptedFiles: '.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF',
+		addRemoveLinks: true, // 업로드 후 파일 삭제버튼 표시 여부
+		dictRemoveFile: '삭제', // 삭제버튼 표시 텍스트
+		uploadMultiple: true,
 		init: function () {
 		    var submitButton = document.querySelector("#btn-upload");
 		    var myDropzone = this;
 		    submitButton.addEventListener("click", function () {
 		        console.log("업로드");
+		        
+		        if (myDropzone.getRejectedFiles().length > 0) {
+		            let files = myDropzone.getRejectedFiles();
+		            console.log('거부된 파일이 있습니다.', files);
+		            return;
+		         }
+		        
 		        myDropzone.processQueue();
 		    });
-		    
-		    this.on('success',function(file,responseText){
-		        var obj = JSON.parse(responseText);
-		        console.log("성공");
-		    })
-		},
-		autoProcessQueue: false,
-		clickable: true,
-		acceptedFiles: '.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF',
-		maxFilesize:10,
-		parallelUploads:5,
-		addRemoveLinks:  true,
-		uploadMultiple:true,	//멀티파일 업로드
-        dictRemoveFile:'삭제',	//삭제 버튼의 텍스트 설정
-        paramName: 'file',
-        params: {
-            cid:[[${camp.cid}]]
-        },
-        addRemoveLinks: true,
-        dictRemoveFile: "삭제",
-      });
+
+		      // 서버로 파일이 성공적으로 전송되면 실행
+		      this.on('success', function (file, responseText) {
+		    	  console.log('성공');
+		      });
+			},
+		});
 	</script>
 
 
@@ -436,31 +465,7 @@
     injectSvgSprite('https://demo.bootstrapious.com/directory/1-4/icons/orion-svg-sprite.svg');
 
   </script>
-   <!-- jQuery-->
-   <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-   <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
-   <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-   <!-- Magnific Popup - Lightbox for the gallery-->
-   <script th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
-   <!-- Smooth scroll-->
-   <script th:src="@{/vendor/smooth-scroll/smooth-scroll.polyfills.min.js}"></script>
-   <!-- Bootstrap Select-->
-   <script th:src="@{/vendor/bootstrap-select/js/bootstrap-select.min.js}"></script>
-   <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
-   <script th:src="@{/vendor/object-fit-images/ofi.min.js}"></script>
-   <!-- Swiper Carousel                       -->
-   <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js}"></script>
-   <script>var basePath = ''</script>
-   <!-- Main Theme JS file    -->
-   <script th:src="@{/js/theme.js}"></script>
-  <!-- Dropzone.js-->
-    <script th:src="@{/vendor/dropzone/dropzone.js}"></script>
-    <!-- Dropzone Init-->
-  <!-- Map-->
-  <script th:src="@{https://unpkg.com/leaflet@1.5.1/dist/leaflet.js}"
-    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-    crossorigin=""></script>
-  <!-- Available tile layers-->
+
 
 </body>
 

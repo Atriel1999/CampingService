@@ -6,8 +6,10 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.HtmlUtils;
 
 import com.camping.jpa.list.model.service.CampingListService;
 import com.camping.jpa.list.model.vo.CampingList;
@@ -62,7 +67,12 @@ public class CampingListController {
 		model.addAttribute("site",site);
 		model.addAttribute("organizer", organizer);
 		model.addAttribute("participant", participant);
+		
 		return "/camping/camping-edit";
+		
+//		model.addAttribute("msg", "캠핑정보가 등록 되었습니다.");
+//		model.addAttribute("location", "/camping/camping-single?cid=" + cid + "&siteid=" + siteid);
+//		return "common/msg";
 	}
 	
 //	@PostMapping("/camping-edit")
@@ -72,30 +82,71 @@ public class CampingListController {
 //	}
 	
 	@PostMapping("/camping-edit")
-	public String upload(@RequestParam(name = "file", required = false) List<MultipartFile> file, 
+	public String upload(Model model, MultipartHttpServletRequest request, @RequestParam HashMap<String, Object> parameter,
 						@ModelAttribute("campinglist") CampingList campinglist) {
-		log.info("uploaded file " + file);
-		log.info("dbg1 camping data: " + campinglist);
-		
+
+		List<String> LinkList = new ArrayList<>();
 		List<CampingImage> CampingImageList = new ArrayList<CampingImage>();
 		
-		// 파일 저장 로직
-		for(MultipartFile upfile : file) {
-			if(upfile.getSize() == 0) {
-				continue;
-			}
-			String renamedFileName = service.saveFile(upfile); // 실제 파일 저장되는 로직
-			log.info("dbg2: renamefile: " + renamedFileName);
-			if(renamedFileName != null) {
-				CampingImage Imagefile = new CampingImage();
-				Imagefile.setCiimage(renamedFileName);
-				CampingImageList.add(Imagefile);
-			}
+		
+		int cid = 0;
+		if(campinglist.getCid() == 0) {
+			cid =  Integer.parseInt((String.valueOf(parameter.get("param_1"))));
+		}
+		else {
+			cid = campinglist.getCid();
+			service.InsertCampingList(campinglist);
 		}
 		
+		log.info("listdbg55 campinglist:" + campinglist + ", parameter: " + cid);
 		
+		LinkList = service.uploadFile(request, parameter);
 		
-		return "/camping/camping-list";
+		for (String Link : LinkList) {
+			CampingImage Imagefile = new CampingImage();
+			Imagefile.setCid(cid);
+			Imagefile.setCiimage(Link);
+			CampingImageList.add(Imagefile);
+		}
+		
+		log.info("listdbg66 Campimagelist: " + CampingImageList);
+		int result = service.InsertCampingImage(CampingImageList);
+
+		
+		int siteid= campinglist.getSiteid();
+		model.addAttribute("msg", "캠핑정보가 등록 되었습니다.");
+		model.addAttribute("location", "/camping/camping-single?cid=" + cid + "&siteid=" + siteid);
+		return "/common/msg";
+
+		
+		//		log.info("dbg1 camping data: " + campinglist);
+//		
+//		List<CampingImage> CampingImageList = new ArrayList<CampingImage>();
+
+		// 파일 저장 로직
+//		if(file != null) {
+//			for(MultipartFile upfile : file) {
+//				log.info("uploaded file each: " + upfile + ",size: " + upfile.getSize());
+//				if(upfile.getSize() == 0) {
+//					continue;
+//				}
+//				
+//				String uploadedFileName = service.upload(upfile); // 실제 파일 저장되는 로직
+//				log.info("dbg6 cid: " + campinglist.getCid() +", filename: " + uploadedFileName);
+//				if(uploadedFileName != null) {
+//					CampingImage Imagefile = new CampingImage();
+//					Imagefile.setCid(campinglist.getCid());
+//					Imagefile.setCiimage(uploadedFileName);
+//					CampingImageList.add(Imagefile);
+//				}
+//			}
+//		}
+//		
+//		log.info("dbg7 camping data: " + CampingImageList);
+//		service.InsertCampingImage(CampingImageList);
+//		
+//		
+//		return "/camping/camping-list";
 	}
 	
 	
@@ -105,6 +156,7 @@ public class CampingListController {
 
 
 		List<CampingList> getlist = service.findByOrderByCstartDesc();
+		
 		List<CampingList> list = getlist.stream().distinct().collect(Collectors.toList()); //왠진모르꼤는데 2번조회되서 중복제거
 
 		if (list == null) {
@@ -116,7 +168,15 @@ public class CampingListController {
         while(iterator.hasNext()){
         	CampingList camp = iterator.next();
         	List<CampingMember> tempList = camp.getCampingmember();
-        	//List<User> tempList2 = ;
+        	CampingSite site = service.findBySiteid(camp.getSiteid());
+        	
+        	String imageLink = site.getSiteimage();
+        	if(imageLink.length() == 0) {
+        		camp.setCpm("/img/temp.jpg");
+        	} else {
+        		camp.setCpm(site.getSiteimage());
+        	}
+        	
         	camp.setUsername(tempList.get(0).getUserlist().username);
 
         }
@@ -139,6 +199,7 @@ public class CampingListController {
 	public String campingSingleLoading(Model model, @RequestParam(value = "cid") int cid, @RequestParam(value = "siteid") int siteid) {
 		CampingList camp = service.findByCid(cid);
 		CampingSite site = service.findBySiteid(siteid);
+		List<CampingImage> image = service.findImageByCid(cid); 
 		
 		
 		if(cid == 0) {
@@ -224,6 +285,7 @@ public class CampingListController {
 		model.addAttribute("organizer", organizer);
 		model.addAttribute("participant", participant);
 		model.addAttribute("site", site);
+		model.addAttribute("image", image);
 		model.addAttribute("diff", diff);
 		model.addAttribute("day1", day1);
 		model.addAttribute("day2", day2);

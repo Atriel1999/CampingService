@@ -54,6 +54,7 @@
           <div>
             <label class="form-label me-2" for="form_sort">캠핑 종류</label>
             <select class="me-3 mb-3 mb-lg-0" id="sortBy" name="sortBy" data-style="btn-selectpicker" onchange="this.form.submit()">
+            	<option value="sortBy_0" th:selected="${sortBy == 'sort0'}"> 전체 </option>
                 <option value="sortBy_1" th:selected="${sortBy == 'sort1'}"> 오토캠핑 </option>
 	            <option value="sortBy_2" th:selected="${sortBy == 'sort2'}"> 백패킹</option>
 	            <option value="sortBy_3" th:selected="${sortBy == 'sort3'}"> 차박캠핑 </option>
@@ -75,10 +76,14 @@
 
           <div th:each="listdata : ${list}" class="col-xl-3 col-md-4 col-sm-6 mb-5" data-marker-id="59c0c8e33b1527bfe2abaf92">
             <div class="card hover-animate h-100 border-0 shadow">
-              <div class="card-img-top overflow-hidden"><a th:href="@{/camping/camping-single(cid=${listdata.cid}, siteid=${listdata.siteid})}"><img class="img-fluid" th:src="@{/img/photo/photo-1484154218962-a197022b5858.jpg}"/></a></div>
+              <div class="card-img-top overflow-hidden">
+              	<a th:href="@{/camping/camping-single(cid=${listdata.cid}, siteid=${listdata.siteid})}">
+              		<img class="img-fluid" th:src="@{${listdata.cpm}}" style="widht:310px; height:207px;"/>
+              	</a>
+              </div>
               <div class="card-body d-flex align-items-center">
                 <div class="w-100">
-                  <p class="subtitle fw-normal text-sm mb-2" th:text="${listdata.cstart}"></p>
+                  <p class="subtitle fw-normal text-sm mb-2" th:text="${#dates.format(listdata.cstart,'yyyy-MM-dd')}"></p>
                   <h6 class="card-title"><a class="text-decoration-none text-dark" th:href="@{/camping/camping-single(cid=${listdata.cid}, siteid=${listdata.siteid})}" th:text="${listdata.cname}"></a></h6>
                   <div class="d-flex card-subtitle mb-2" th:switch="${listdata.ctype}">
                   <th:block th:case=1>
