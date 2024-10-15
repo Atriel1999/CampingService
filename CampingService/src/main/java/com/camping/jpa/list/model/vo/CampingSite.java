@@ -67,5 +67,7 @@ public class CampingSite {
 	@Column(name="SITEANIMAL")			
 	public String siteanimal;
 	@Column(name="SITEIMAGE")			
-	public String siteimage;	
+	public String siteimage;
+	@Column(name="PRICE")			
+	public int price;
 }

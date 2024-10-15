@@ -98,8 +98,6 @@ public class CampingListController {
 			service.InsertCampingList(campinglist);
 		}
 		
-		log.info("listdbg55 campinglist:" + campinglist + ", parameter: " + cid);
-		
 		LinkList = service.uploadFile(request, parameter);
 		
 		for (String Link : LinkList) {
@@ -119,34 +117,7 @@ public class CampingListController {
 		return "/common/msg";
 
 		
-		//		log.info("dbg1 camping data: " + campinglist);
-//		
-//		List<CampingImage> CampingImageList = new ArrayList<CampingImage>();
 
-		// 파일 저장 로직
-//		if(file != null) {
-//			for(MultipartFile upfile : file) {
-//				log.info("uploaded file each: " + upfile + ",size: " + upfile.getSize());
-//				if(upfile.getSize() == 0) {
-//					continue;
-//				}
-//				
-//				String uploadedFileName = service.upload(upfile); // 실제 파일 저장되는 로직
-//				log.info("dbg6 cid: " + campinglist.getCid() +", filename: " + uploadedFileName);
-//				if(uploadedFileName != null) {
-//					CampingImage Imagefile = new CampingImage();
-//					Imagefile.setCid(campinglist.getCid());
-//					Imagefile.setCiimage(uploadedFileName);
-//					CampingImageList.add(Imagefile);
-//				}
-//			}
-//		}
-//		
-//		log.info("dbg7 camping data: " + CampingImageList);
-//		service.InsertCampingImage(CampingImageList);
-//		
-//		
-//		return "/camping/camping-list";
 	}
 	
 	
@@ -184,19 +155,11 @@ public class CampingListController {
         System.out.println("test1: " + list);
 		model.addAttribute("list",list);
 
-		
-//		List<User> writter = service.findByMemberlist_Campinglist_Cid(1);
-//		if (writter == null) {
-//			return "redirect:error";
-//		}
-//		log.info("listdbg2 :" + writter);
-//		model.addAttribute("writter", writter);
-
 		return "/camping/camping-list";
 	}
 	
 	@GetMapping("/camping-single")
-	public String campingSingleLoading(Model model, @RequestParam(value = "cid") int cid, @RequestParam(value = "siteid") int siteid) {
+	public String campingSingleLoading(Model model, @RequestParam(value = "cid") int cid, @RequestParam(value = "siteid") int siteid, @SessionAttribute(name="loginMember", required = false) User loginMember) {
 		CampingList camp = service.findByCid(cid);
 		CampingSite site = service.findBySiteid(siteid);
 		List<CampingImage> image = service.findImageByCid(cid); 
@@ -280,6 +243,7 @@ public class CampingListController {
 		}
 
 		log.info("test2: " + camp + "\ntest3: " + day1 + ", " + day2 + "\ntest4: " + site);
+		log.info("dbg345: " + loginMember);
 		
 		model.addAttribute("camp", camp);
 		model.addAttribute("organizer", organizer);
@@ -289,6 +253,7 @@ public class CampingListController {
 		model.addAttribute("diff", diff);
 		model.addAttribute("day1", day1);
 		model.addAttribute("day2", day2);
+		model.addAttribute("user", loginMember);
 		return "camping/camping-single";
 	}
 }

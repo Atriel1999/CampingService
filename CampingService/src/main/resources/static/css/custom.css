@@ -1,3 +1,7 @@
+.inline-div{
+	 display: inline-block;
+}
+
 .wrap {
 	position: absolute;
 	left: 0;

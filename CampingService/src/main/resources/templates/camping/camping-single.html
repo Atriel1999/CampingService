@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Directory Theme by Bootstrapious</title>
+    <title>캠핑가자</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -166,14 +166,14 @@
                 <div class="text-uppercase"> <span class="text-sm" th:text="${#dates.month(camp.cstart) + '월'}"></span><br><strong class="text-lg" th:text="${#dates.day(camp.cstart)}"></strong>
                 </div>
               </div>
-              <p class="text-sm mb-0" th:text="${day1 + ' 출발 14시'}"><br>14시</p> <!-- #dates.format(camp.cstart, 'yyyy-MM-dd HH:mm:ss') -->
+              <p class="text-sm mb-0" th:text="${day1 + ' 출발 14시'}"><br></p> <!-- #dates.format(camp.cstart, 'yyyy-MM-dd HH:mm:ss') -->
             </div>
             <div class="col-md-6 d-flex align-items-center">
               <div class="date-tile me-3">
                 <div class="text-uppercase"> <span class="text-sm" th:text="${#dates.month(camp.cend) + '월'}"></span><br><strong class="text-lg" th:text="${#dates.day(camp.cend)}"></strong>
                 </div>
               </div>
-              <p class="text-sm mb-0" th:text="${day2 + ' 해산 11시'}"><br>11시</p>
+              <p class="text-sm mb-0" th:text="${day2 + ' 해산 11시'}"><br></p>
             </div>
           </div>
         </div>
@@ -181,12 +181,28 @@
           <div class="row">
             <div class="col-sm">
               <h6>주소지</h6>
-              <p class="text-muted" th:text="${site.sitecompany}"></p>
-              <p class="text-muted" th:text="${site.siteaddr}"></p>
+              <form action ="/kakaoPay" method="post">
+	            <p class="text-muted" th:text="${site.sitecompany}"></p>
+	            <p class="text-muted" th:text="${site.siteaddr}"></p>
+	            <p class="text-muted" th:text="${'₩' + #numbers.formatInteger(site.price,3,'COMMA')}"></p>
+	            <input type="hidden" th:value="${site.sitecompany}" name="item_name"/>
+	            <div th:if="${session.loginMember != null}">
+	            	<input type="hidden" th:value="${session.loginMember.userno}" name="userno"/>
+	            </div>
+	            <input type="hidden" th:value="${site.price}" name="total_amount"/>
+	            <input type="hidden" th:value="${camp.cid}" name="cid"/>
+				
+	            <input type="hidden" th:value="${site.siteid}" name="siteid"/>
+	            <input type="hidden" name="quantity" value="1">
+	            <div th:if="${session.loginMember != null}">
+	              	<button class="btn btn-link ps-0" type="submit" value="확인" th:if="${session.loginMember.userno == organizer.userno or session.loginMember.userrole == 'admin'}">결제하기</button>
+              	</div>
+              		<p class="btn btn-primary">결제완료</p>
+              </form>
             </div>
             <div class="col-sm">
               <h6>전화번호</h6>
-              <p class="text-muted" th:text="${0 + camp.cphone}"></p>
+              <p class="text-muted" th:text="${camp.cphone}"></p>
             </div>
           </div>
         </div>
@@ -218,7 +234,7 @@
           <div class="row">
             <div class="col">
               <h6> 총 예상 지출금액</h6>
-              <p class="text-muted" th:text="${'₩' + #numbers.formatInteger(camp.cexpense,3,'COMMA')}"> ₩433,000</p>
+              <p class="text-muted" th:text="${'₩' + #numbers.formatInteger(camp.cexpense,3,'COMMA')}"></p>
             </div>
           </div>
         </div>

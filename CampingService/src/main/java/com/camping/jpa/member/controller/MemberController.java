@@ -1,6 +1,7 @@
 package com.camping.jpa.member.controller;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -143,5 +144,44 @@ public class MemberController {
 		return "common/msg";
 	}
 	
+	@GetMapping("/login/user-profile")
+	public String loadingProfile(Model model, @SessionAttribute(name="loginMember", required = false) User loginMember) {
+		log.info("listdbg111: " + loginMember);
+		
+		
+		model.addAttribute("user", loginMember);
+				
+		return "/login/user-profile";
+	}
+	
 
+	
 }
+//		log.info("dbg1 camping data: " + campinglist);
+//
+//List<CampingImage> CampingImageList = new ArrayList<CampingImage>();
+
+// 파일 저장 로직
+//if(file != null) {
+//	for(MultipartFile upfile : file) {
+//		log.info("uploaded file each: " + upfile + ",size: " + upfile.getSize());
+//		if(upfile.getSize() == 0) {
+//			continue;
+//		}
+//		
+//		String uploadedFileName = service.upload(upfile); // 실제 파일 저장되는 로직
+//		log.info("dbg6 cid: " + campinglist.getCid() +", filename: " + uploadedFileName);
+//		if(uploadedFileName != null) {
+//			CampingImage Imagefile = new CampingImage();
+//			Imagefile.setCid(campinglist.getCid());
+//			Imagefile.setCiimage(uploadedFileName);
+//			CampingImageList.add(Imagefile);
+//		}
+//	}
+//}
+//
+//log.info("dbg7 camping data: " + CampingImageList);
+//service.InsertCampingImage(CampingImageList);
+//
+//
+//return "/camping/camping-list";
