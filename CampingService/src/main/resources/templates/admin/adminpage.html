@@ -49,46 +49,40 @@
             <input class="form-control form-control-sm border-0 shadow-0 bg-gray-200" id="search_search" placeholder="캠핑 번호 검색" aria-label="Search" type="search">
           </div>
 
-          <div class="text-center">
-            <label class="form-label me-2" for="form_sort">정렬</label>
-            <select class="selectpicker me-3 mb-3 mb-lg-0" name="sort" id="form_sort" data-style="btn-selectpicker" title="">
-              <option value="sortBy_0">최근순   </option>
-              <option value="sortBy_1">오래된순  </option>
-            </select><a class="btn btn-outline-secondary" href="#"><i class="fa fa-download me-2"></i>CSV 다운로드</a>
-          </div>
-
           
         </div>
         <div class="list-group shadow mb-5">
 
           <!-- 어드민페이지 item-->
-          <div class="list-group-item list-group-item-action p-4">
+          <div class="list-group-item list-group-item-action p-4" th:each="listdata : ${data}">
             <div class="row">
               <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
                 <div class="d-flex align-items-center mb-3">
-                  <h2 class="h5 mb-0">캠핑족1</h2><img class="avatar avatar-sm avatar-border-white ms-3"
-                    src="img/avatar/avatar-0.jpg" alt="Jack London">
+                  <h2 class="h5 mb-0" th:text="${listdata.paymentrequest.user.username}"></h2><img class="avatar avatar-sm avatar-border-white ms-3"
+                    th:src="@{${listdata.paymentrequest.user.userimage}}" alt="Jack London">
                 </div>
-                <p class="text-sm text-muted">캠핑번호:132번 | 충주 카누캠핑장</p><span class="badge badge-pill p-2 badge-secondary-light">9월 16, 2024 -
-                  9월 19, 2024</span>
+                <p class="text-sm text-muted" th:text="${'캠핑번호:' + listdata.paymentrequest.campinglist.cid + '번 | ' + listdata.paymentrequest.campinglist.cname}"></p>
+                <p class="text-sm text-muted" th:text="${listdata.paymentrequest.siteid.sitecompany}"></p>
+                <span class="badge badge-pill p-2 badge-secondary-light" 
+                	th:text="${#dates.format(listdata.paymentrequest.campinglist.cstart,'yyyy-MM-dd') + ' ~ ' + #dates.format(listdata.paymentrequest.campinglist.cend,'yyyy-MM-dd')}"></span>
               </div>
               <div class="col-lg-8">
                 <div class="row">
                   <div class="col-6 col-md-4 col-lg-3 py-3 mb-3 mb-lg-0">
-                    <h6 class="label-heading">캠핑형식</h6>
-                    <p class="text-sm fw-bold">카라반</p>
+                    <h6 class="label-heading">결제 일</h6>
+                    <p class="text-sm fw-bold" th:text="${#dates.format(listdata.approve_at,'yyyy-MM-dd hh:mm')}"></p>
                     <h6 class="label-heading">일 수 </h6>
                     <p class="text-sm fw-bold mb-0">3</p>
                   </div>
                   <div class="col-6 col-md-4 col-lg-3 py-3">
                     <h6 class="label-heading">사이트 주소</h6>
-                    <a class="text-sm fw-bold" href="http://outofpark.com/main/">바로가기</a>
+                    <a class="text-sm fw-bold" th:href="${listdata.paymentrequest.siteid.siteurl}">바로가기</a>
                     <h6 class="label-heading mt-3">금액</h6>
-                    <p class="text-sm fw-bold mb-0">244000</p>
+                    <p class="text-sm fw-bold mb-0" th:text="${listdata.total}"></p>
                   </div>
                   <div class="col-6 col-md-4 col-lg-3 py-3">
                     <h6 class="label-heading">예약날짜</h6>
-                    <p class="text-sm fw-bold">9월 1, 2024</p>
+                    <p class="text-sm fw-bold" th:text=${#dates.format(listdata.paymentrequest.campinglist.cstart,'yyyy-MM-dd')}></p>
                     <h6 class="label-heading">체크인 시간</h6>
                     <p class="text-sm fw-bold mb-0">약 16시</p>
                   </div>
@@ -102,218 +96,9 @@
             </div>
           </div>
 
-          <!-- 어드민페이지 item-->
-          <div class="list-group-item list-group-item-action p-4">
-            <div class="row">
-              <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
-                <div class="d-flex align-items-center mb-3">
-                  <h2 class="h5 mb-0">캠핑족1</h2><img class="avatar avatar-sm avatar-border-white ms-3"
-                    src="img/avatar/avatar-0.jpg" alt="Jack London">
-                </div>
-                <p class="text-sm text-muted">캠핑번호:132번 | 충주 카누캠핑장</p><span class="badge badge-pill p-2 badge-secondary-light">9월 16, 2024 -
-                  9월 19, 2024</span>
-              </div>
-              <div class="col-lg-8">
-                <div class="row">
-                  <div class="col-6 col-md-4 col-lg-3 py-3 mb-3 mb-lg-0">
-                    <h6 class="label-heading">캠핑형식</h6>
-                    <p class="text-sm fw-bold">카라반</p>
-                    <h6 class="label-heading">일 수 </h6>
-                    <p class="text-sm fw-bold mb-0">3</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">사이트 주소</h6>
-                    <a class="text-sm fw-bold" href="http://outofpark.com/main/">바로가기</a>
-                    <h6 class="label-heading mt-3">금액</h6>
-                    <p class="text-sm fw-bold mb-0">244000</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">예약날짜</h6>
-                    <p class="text-sm fw-bold">9월 1, 2024</p>
-                    <h6 class="label-heading">체크인 시간</h6>
-                    <p class="text-sm fw-bold mb-0">약 16시</p>
-                  </div>
-                  <div class="col-12 col-lg-3 align-self-center">
-                    <span class="text-primary text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>정상결제완료</span>
-                    <br class="d-none d-lg-block"> <span class="text-muted text-sm text-uppercase"> <i class="fa fa-times fa-fw me-2"> </i>결제 취소하기</span>
-                    <br class="d-none d-lg-block"> <span class="text-primary text-sm text-uppercase"> <i class="fa fa-tablet fa-fw me-2"> </i>캠핑 수정하기</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 어드민페이지 item-->
-          <div class="list-group-item list-group-item-action p-4">
-            <div class="row">
-              <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
-                <div class="d-flex align-items-center mb-3">
-                  <h2 class="h5 mb-0">캠핑족1</h2><img class="avatar avatar-sm avatar-border-white ms-3"
-                    src="img/avatar/avatar-0.jpg" alt="Jack London">
-                </div>
-                <p class="text-sm text-muted">캠핑번호:132번 | 충주 카누캠핑장</p><span class="badge badge-pill p-2 badge-secondary-light">9월 16, 2024 -
-                  9월 19, 2024</span>
-              </div>
-              <div class="col-lg-8">
-                <div class="row">
-                  <div class="col-6 col-md-4 col-lg-3 py-3 mb-3 mb-lg-0">
-                    <h6 class="label-heading">캠핑형식</h6>
-                    <p class="text-sm fw-bold">카라반</p>
-                    <h6 class="label-heading">일 수 </h6>
-                    <p class="text-sm fw-bold mb-0">3</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">사이트 주소</h6>
-                    <a class="text-sm fw-bold" href="http://outofpark.com/main/">바로가기</a>
-                    <h6 class="label-heading mt-3">금액</h6>
-                    <p class="text-sm fw-bold mb-0">244000</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">예약날짜</h6>
-                    <p class="text-sm fw-bold">9월 1, 2024</p>
-                    <h6 class="label-heading">체크인 시간</h6>
-                    <p class="text-sm fw-bold mb-0">약 16시</p>
-                  </div>
-                  <div class="col-12 col-lg-3 align-self-center">
-                    <span class="text-primary text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>정상결제완료</span>
-                    <br class="d-none d-lg-block"> <span class="text-muted text-sm text-uppercase"> <i class="fa fa-times fa-fw me-2"> </i>결제 취소하기</span>
-                    <br class="d-none d-lg-block"> <span class="text-primary text-sm text-uppercase"> <i class="fa fa-tablet fa-fw me-2"> </i>캠핑 수정하기</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 어드민페이지 item-->
-          <div class="list-group-item list-group-item-action p-4">
-            <div class="row">
-              <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
-                <div class="d-flex align-items-center mb-3">
-                  <h2 class="h5 mb-0">캠핑족1</h2><img class="avatar avatar-sm avatar-border-white ms-3"
-                    src="img/avatar/avatar-0.jpg" alt="Jack London">
-                </div>
-                <p class="text-sm text-muted">캠핑번호:132번 | 충주 카누캠핑장</p><span class="badge badge-pill p-2 badge-secondary-light">9월 16, 2024 -
-                  9월 19, 2024</span>
-              </div>
-              <div class="col-lg-8">
-                <div class="row">
-                  <div class="col-6 col-md-4 col-lg-3 py-3 mb-3 mb-lg-0">
-                    <h6 class="label-heading">캠핑형식</h6>
-                    <p class="text-sm fw-bold">카라반</p>
-                    <h6 class="label-heading">일 수 </h6>
-                    <p class="text-sm fw-bold mb-0">3</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">사이트 주소</h6>
-                    <a class="text-sm fw-bold" href="http://outofpark.com/main/">바로가기</a>
-                    <h6 class="label-heading mt-3">금액</h6>
-                    <p class="text-sm fw-bold mb-0">244000</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">예약날짜</h6>
-                    <p class="text-sm fw-bold">9월 1, 2024</p>
-                    <h6 class="label-heading">체크인 시간</h6>
-                    <p class="text-sm fw-bold mb-0">약 16시</p>
-                  </div>
-                  <div class="col-12 col-lg-3 align-self-center">
-                    <span class="text-primary text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>정상결제완료</span>
-                    <br class="d-none d-lg-block"> <span class="text-muted text-sm text-uppercase"> <i class="fa fa-times fa-fw me-2"> </i>결제 취소하기</span>
-                    <br class="d-none d-lg-block"> <span class="text-primary text-sm text-uppercase"> <i class="fa fa-tablet fa-fw me-2"> </i>캠핑 수정하기</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 어드민페이지 item-->
-          <div class="list-group-item list-group-item-action p-4">
-            <div class="row">
-              <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
-                <div class="d-flex align-items-center mb-3">
-                  <h2 class="h5 mb-0">캠핑족1</h2><img class="avatar avatar-sm avatar-border-white ms-3"
-                    src="img/avatar/avatar-0.jpg" alt="Jack London">
-                </div>
-                <p class="text-sm text-muted">캠핑번호:132번 | 충주 카누캠핑장</p><span class="badge badge-pill p-2 badge-secondary-light">9월 16, 2024 -
-                  9월 19, 2024</span>
-              </div>
-              <div class="col-lg-8">
-                <div class="row">
-                  <div class="col-6 col-md-4 col-lg-3 py-3 mb-3 mb-lg-0">
-                    <h6 class="label-heading">캠핑형식</h6>
-                    <p class="text-sm fw-bold">카라반</p>
-                    <h6 class="label-heading">일 수 </h6>
-                    <p class="text-sm fw-bold mb-0">3</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">사이트 주소</h6>
-                    <a class="text-sm fw-bold" href="http://outofpark.com/main/">바로가기</a>
-                    <h6 class="label-heading mt-3">금액</h6>
-                    <p class="text-sm fw-bold mb-0">244000</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">예약날짜</h6>
-                    <p class="text-sm fw-bold">9월 1, 2024</p>
-                    <h6 class="label-heading">체크인 시간</h6>
-                    <p class="text-sm fw-bold mb-0">약 16시</p>
-                  </div>
-                  <div class="col-12 col-lg-3 align-self-center">
-                    <span class="text-primary text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>정상결제완료</span>
-                    <br class="d-none d-lg-block"> <span class="text-muted text-sm text-uppercase"> <i class="fa fa-times fa-fw me-2"> </i>결제 취소하기</span>
-                    <br class="d-none d-lg-block"> <span class="text-primary text-sm text-uppercase"> <i class="fa fa-tablet fa-fw me-2"> </i>캠핑 수정하기</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 어드민페이지 item-->
-          <div class="list-group-item list-group-item-action p-4">
-            <div class="row">
-              <div class="col-lg-4 align-self-center mb-4 mb-lg-0">
-                <div class="d-flex align-items-center mb-3">
-                  <h2 class="h5 mb-0">캠핑족1</h2><img class="avatar avatar-sm avatar-border-white ms-3"
-                    src="img/avatar/avatar-0.jpg" alt="Jack London">
-                </div>
-                <p class="text-sm text-muted">캠핑번호:132번 | 충주 카누캠핑장</p><span class="badge badge-pill p-2 badge-secondary-light">9월 16, 2024 -
-                  9월 19, 2024</span>
-              </div>
-              <div class="col-lg-8">
-                <div class="row">
-                  <div class="col-6 col-md-4 col-lg-3 py-3 mb-3 mb-lg-0">
-                    <h6 class="label-heading">캠핑형식</h6>
-                    <p class="text-sm fw-bold">카라반</p>
-                    <h6 class="label-heading">일 수 </h6>
-                    <p class="text-sm fw-bold mb-0">3</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">사이트 주소</h6>
-                    <a class="text-sm fw-bold" href="http://outofpark.com/main/">바로가기</a>
-                    <h6 class="label-heading mt-3">금액</h6>
-                    <p class="text-sm fw-bold mb-0">244000</p>
-                  </div>
-                  <div class="col-6 col-md-4 col-lg-3 py-3">
-                    <h6 class="label-heading">예약날짜</h6>
-                    <p class="text-sm fw-bold">9월 1, 2024</p>
-                    <h6 class="label-heading">체크인 시간</h6>
-                    <p class="text-sm fw-bold mb-0">약 16시</p>
-                  </div>
-                  <div class="col-12 col-lg-3 align-self-center">
-                    <span class="text-primary text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>정상결제완료</span>
-                    <br class="d-none d-lg-block"> <span class="text-muted text-sm text-uppercase"> <i class="fa fa-times fa-fw me-2"> </i>결제 취소하기</span>
-                    <br class="d-none d-lg-block"> <span class="text-primary text-sm text-uppercase"> <i class="fa fa-tablet fa-fw me-2"> </i>캠핑 수정하기</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
         </div>
-        <!-- Pagination -->
-        <nav aria-label="Page navigation example">
-          <ul class="pagination pagination-template d-flex justify-content-center">
-            <li class="page-item"><a class="page-link" href="#"> <i class="fa fa-angle-left"></i></a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#"> <i class="fa fa-angle-right"></i></a></li>
-          </ul>
-        </nav>
       </div>
     </section>
     <!-- Footer-->

@@ -4,9 +4,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import com.camping.jpa.kakao.model.repository.PaymentApproveRepository;
 import com.camping.jpa.kakao.model.repository.PaymentRequestRepository;
 import com.camping.jpa.kakao.model.vo.PaymentRequest;
+import com.camping.jpa.list.model.vo.CampingList;
+import com.camping.jpa.list.model.vo.User;
 import com.camping.jpa.kakao.model.vo.PaymentApprove;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +42,12 @@ public class KakaoPayService {
 
 	private KakaoPayReadyVO kakaoPayReadyVO;
 	private KakaoPayApprovalVO kakaoPayApprovalVO;
+	
+	//aid 기준으로 검색 and sort
+	public List<PaymentApprove> findAllByOrderByAidDesc(){
+		return repo2.findAllByOrderByAidDesc();
+	}
+	
 
 	public String kakaoPayReady(Map<String, String> param) {
 
@@ -64,9 +75,18 @@ public class KakaoPayService {
 		
 		log.info("dbg12345: " + param);
 		PaymentRequest tempData = new PaymentRequest();
-		tempData.setUserno(param.get("userno"));
+		User tempUser = new User();
+		CampingList tempCamping = new CampingList();
+		
+		tempUser.setUserno(param.get("userno"));
+		tempCamping.setCid(Integer.parseInt(param.get("cid")));
+		
+		tempData.setCampinglist(tempCamping);
+		tempData.setUser(tempUser);
+		
+//		tempData.setUserno(param.get("userno"));
 		tempData.setSiteid(Integer.parseInt(param.get("siteid")));
-		tempData.setCid(Integer.parseInt(param.get("cid")));
+//		tempData.setCid(Integer.parseInt(param.get("cid")));
 
 		HttpEntity<Map<String, String>> body = new HttpEntity<>(params, headers); //new HttpEntity<Map<String, String>>(params, headers);
 		System.out.println("dbg1 body: " + body);
@@ -123,7 +143,10 @@ public class KakaoPayService {
 			AmountVO tempVO = kakaoPayApprovalVO.getAmount();
 			
 			tempData.setAid(kakaoPayApprovalVO.getAid());
-			tempData.setTid(kakaoPayApprovalVO.getTid());
+//			tempData.setTid(kakaoPayApprovalVO.getTid());
+			PaymentRequest tempRequest = new PaymentRequest();
+			tempRequest.setTid(kakaoPayApprovalVO.getTid());
+			tempData.setPaymentrequest(tempRequest);
 			tempData.setApprove_at(kakaoPayApprovalVO.getApproved_at());
 			tempData.setTotal(tempVO.getTotal());
 			tempData.setTax_free(tempVO.getTax_free());

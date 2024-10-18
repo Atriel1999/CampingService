@@ -6,7 +6,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +24,8 @@ public class PaymentApprove {
 	@Id
 	@Column(name="AID")				
 	public String aid;
-	@Column(name="TID")		
-	public String tid;
+//	@Column(name="TID")		
+//	public String tid;
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name="APPROVE_AT")			
 	public Date approve_at;
@@ -32,4 +35,8 @@ public class PaymentApprove {
 	public int tax_free;
 	@Column(name="VAT")			
 	public int vat;
+	
+	@OneToOne
+	@JoinColumn(name = "tid")
+	private PaymentRequest paymentrequest;
 }
