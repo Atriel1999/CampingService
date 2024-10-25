@@ -1,6 +1,6 @@
 package com.camping.jpa.list.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,7 +35,7 @@ public class CampingMember {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date joindate;
 	@Column(name = "CAAUTH")
-	public String caauth; 
+	public int caauth; 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cid")

@@ -19,6 +19,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.util.IOUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.camping.jpa.kakao.model.repository.PaymentApproveRepository;
+import com.camping.jpa.kakao.model.vo.PaymentApprove;
 import com.camping.jpa.list.controller.CampingListController;
 import com.camping.jpa.list.model.repository.CampingImageRepository;
 import com.camping.jpa.list.model.repository.CampingListRepository;
+import com.camping.jpa.list.model.repository.CampingMemberRepository;
 import com.camping.jpa.list.model.repository.CampingSiteRepository;
 import com.camping.jpa.list.model.repository.UserRepository;
 import com.camping.jpa.list.model.vo.CampingImage;
 import com.camping.jpa.list.model.vo.CampingList;
+import com.camping.jpa.list.model.vo.CampingMember;
 import com.camping.jpa.list.model.vo.CampingSite;
 import com.camping.jpa.list.model.vo.User;
 
@@ -57,13 +62,43 @@ public class CampingListService {
 	private final CampingSiteRepository repo3;
 	@Autowired
 	private CampingImageRepository repo4;
+	@Autowired
+	private CampingMemberRepository repo5;
+	@Autowired
+	private PaymentApproveRepository repo6;
 	
-	public List<CampingList> findByOrderByCstartDesc() {
-		return repo2.findByOrderByCstartDesc();
+	public List<PaymentApprove> findPaymentList(int cid) {
+		return repo6.findPaymentList(cid);
+	}
+	
+	public CampingMember insertMember(CampingMember member) {
+		return repo5.save(member);
+	}
+	
+	
+	public CampingList insertCamping(CampingList camp) {
+		return repo2.save(camp);
+	}
+	
+	public int setStatusCamping(int cid, int status) {
+		return repo2.setStatusCamping(cid, status);
+	}
+	
+	public List<CampingList> findByOrderByCstartDesc(String searchValue, int ctype) {
+		
+		if(ctype == 0) {
+			return repo2.findByOrderByCstartDesc(searchValue);
+		}
+			
+		return repo2.findByOrderByCstartDesc(searchValue, ctype);
 	}
 	
 	public CampingList findByCid(int cid) {
 		return repo2.findByCid(cid);
+	}
+	
+	public CampingList findByCname(String cname) {
+		return repo2.findByCname(cname);
 	}
 	
 	public CampingSite findBySiteid(int siteid) {
@@ -99,14 +134,18 @@ public class CampingListService {
 	
 	public List<String> uploadFile(MultipartHttpServletRequest request, HashMap<String, Object> parameter){
 		
+		log.info("request " + request + ", parameter: " + parameter);
 		// Getting uploaded files from the request object
         Map<String, MultipartFile> fileMap = request.getFileMap();
 
         //파일 정보 저장용도
         List<String> LinkList = new ArrayList<>();
 
+        
         // Iterate through the map
         for (MultipartFile multipartFile : fileMap.values()) {
+        	
+        	log.info("miltipartFile" + multipartFile);
         	
         	String fileLink = upload(multipartFile);
                       
@@ -141,6 +180,7 @@ public class CampingListService {
 	
 	private String uploadImage(MultipartFile image) {
 		this.validateImageFileExtention(image.getOriginalFilename());
+		log.info("originname: " + image.getOriginalFilename());
 		try {
 		  return this.uploadImageToS3(image);
 		} catch (IOException e) {
@@ -186,7 +226,9 @@ public class CampingListService {
 	            .withCannedAcl(CannedAccessControlList.PublicRead);
 	            
 	    //실제로 S3에 이미지 데이터를 넣는 부분이다.
-	    amazonS3.putObject(putObjectRequest); // put image to S3
+	    PutObjectResult result = amazonS3.putObject(putObjectRequest); // put image to S3
+	    
+	    log.info("insert result: " + result);
 	  }catch (Exception e){
 		  throw new ArithmeticException("log4j error: PUT_OBJECT_EXCEPTION");
 	  }finally {

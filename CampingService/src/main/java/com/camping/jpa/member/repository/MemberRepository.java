@@ -15,6 +15,7 @@ public interface MemberRepository extends JpaRepository<User, String> {
 //	int selectCount();
 //	List<User> selectAll();
 //	User selectUser(String userno);
+	User findByUserno(String userno);
 	User findByUsername(String username);
 	User findByKakaotoken(String kakaotoken);
 	

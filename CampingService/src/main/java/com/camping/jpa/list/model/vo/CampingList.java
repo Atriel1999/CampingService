@@ -60,6 +60,9 @@ public class CampingList {
 	public Date cend;         // 종료일
 	@Column(name = "CTYPE")
 	public int ctype;
+	@Column(name = "CSTATUS")
+	public int cstatus;
+	
 	public String username;
 	
 	@OneToMany(mappedBy = "campinglist", fetch =FetchType.EAGER)

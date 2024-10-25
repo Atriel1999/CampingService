@@ -238,7 +238,7 @@
               <h6>참여자 목록</h6>
               <p class="text-muted mb-0"><a href="user-profile.html" class="text-black" th:text="${organizer.username}"></a>님에 의해 주최되었어요 </p>
             </div><a href="user-profile.html"><img class="avatar avatar-lg p-1 flex-shrink-0 ms-4"
-                th:src="@{${'/img/avatar/'+organizer.userimage}}" alt="Jack London"></a>
+                th:src="@{${organizer.userimage}}" alt="IMG null"></a>
           </div>
         </div>
         <div class="text-block">
@@ -307,7 +307,7 @@
         </div>
 
         <div class="text-block d-print-none">
-          <button id="btn-upload" class="btn btn-link ps-0" type="submit"><i class="fa fa-pen-fancy me-2"></i>수정완료! </button>
+          <button id="btn-upload" class="btn btn-link ps-0" type="submit"><i class="fa fa-pen-fancy me-2"></i>수정완료 </button>
         </div>
         </form>
       </div>
@@ -330,7 +330,6 @@
         url: '/camping/camping-edit', // 파일 업로드할 url
 		method: "post",
 		autoProcessQueue: false,
-		maxFilesize: 10,
 		parallelUploads: 5,
         paramName: 'file',
 		params: {'param_1':[[${camp.cid}]]},

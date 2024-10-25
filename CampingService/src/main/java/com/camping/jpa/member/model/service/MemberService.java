@@ -18,6 +18,10 @@ public class MemberService {
 	@Autowired
 	private MemberRepository repo;
 	
+	public User findByUserno(String userno) {
+		return repo.findByUserno(userno);
+	}
+	
 	public boolean validate(String username) {
 		return repo.findByUsername(username) != null;
 	}

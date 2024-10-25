@@ -156,7 +156,8 @@
         </ol>
         <div class="text-block">
           <p class="subtitle" th:text="${#dates.format(camp.cstart,'yyyy-MM-dd')} + ' ~ ' + ${#dates.format(camp.cend,'yyyy-MM-dd')}"></p>
-          <h2 class="hero-heading mb-3" name="camp" th:text="${camp.cname}"></h2>
+          <h2 class="hero-heading mb-2" name="camp" th:text="${camp.cname}"></h2>
+          <h4 class="link-danger" th:if="${camp.cstatus == 1}">종료된 캠핑입니다</h4>
         </div>
         <div class="text-block">
           <h6 class="mb-4" th:text="${#numbers.formatInteger(diff,2) + '박 ' + #numbers.formatInteger(diff+1,2) + '일'}"></h6>
@@ -197,7 +198,20 @@
 	            <div th:if="${session.loginMember != null}">
 	              	<button class="btn btn-link ps-0" type="submit" value="확인" th:if="${session.loginMember.userno == organizer.userno or session.loginMember.userrole == 'admin'}">결제하기</button>
               	</div>
-              		<p class="btn btn-primary">결제완료</p>
+              		<div th:if="${payment != null}">
+              			<p class="btn btn-primary">결제완료</p>
+              		</div>
+              		<div th:if="${session.loginMember != null}">
+	              		<div th:if="${payment == null and session.loginMember.userrole == 'user'}">
+	              			<p class="btn btn-primary">결제 미완료</p>
+	              		</div>
+              		</div>
+              		<div th:if="${session.loginMember == null}">
+	              		<div th:if="${payment == null}">
+	              			<p class="btn btn-primary">결제 미완료</p>
+	              		</div>
+              		</div>
+              		
               </form>
             </div>
             <div class="col-sm">
@@ -212,7 +226,7 @@
               <h6>참여자 목록</h6>
               <p class="text-muted mb-0"><a href="user-profile.html" class="text-black" th:text="${organizer.username}"></a>님에 의해 주최되었어요 </p>
             </div><a href="user-profile.html"><img class="avatar avatar-lg p-1 flex-shrink-0 ms-4"
-                th:src="@{${'/img/avatar/'+organizer.userimage}}" alt="Jack London"></a>
+                th:src="@{${organizer.userimage}}" alt="IMG null"></a>
           </div>
         </div>
         <div class="text-block">
@@ -280,130 +294,91 @@
             </div>
           </div>
         </div>
+        
+        <div class="text-block">
+          <h6 class="mb-4">리뷰 목록</h6>
+          <ul class="list-unstyled">
+          
+	          <th:block th:if="${camp.cstatus == 0}">
+	          		<tr>
+						<td colspan="6">종료되지 않은 여행입니다.</td>
+					</tr>
+	          </th:block>
+          
+          	<th:block th:if="${camp.cstatus == 1}">
+	          	<th:block th:if="${review == null || #lists.size(review) == 0}">
+					<tr>
+						<td colspan="6">조회된 리뷰글이 없습니다.</td>
+					</tr>
+				</th:block>
+	          	
+	          	<th:block th:if="${review != null && #lists.size(review) != 0}">
+	         		<div th:each="reviewdata : ${review}">
+			            <li class="mb-2">
+			              <div class="d-flex align-items-center mb-3">
+			              	<a th:href="@{/review/camping-review(crid=${reviewdata.crid})}">
+			                	<div class="text-sm" style="width: 20rem; margin-right: 3rem;" th:text="${reviewdata.crname}"></div>
+			                </a>
+			                <div><span class="text-sm" th:text="${#dates.format(reviewdata.crcreatedate,'yyyy-MM-dd hh:mm:ss')}"></span></div>
+			              </div>
+			            </li>
+		            </div>
+	            </th:block>
+            </th:block>
+          </ul>
+          
+         </div>
+           
 
-        <!-- 채팅 -->
-        <!-- Chat Box-->
-        <div class="px-4 py-5" id="chatBox">
-          <div class="row">
-            <!-- Sender Message-->
-            <div class="d-flex col-md-9 col-xl-7 mb-3" id="chat"><img class="avatar avatar-border-white flex-shrink-0" th:src="@{/img/avatar/avatar-1.jpg}" alt="user">
-              <div class="ms-3">
-                <div class="bg-gray-200 rounded p-4 mb-2">
-                  <p class="text-sm mb-0">One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div>
-            </div>
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-            <!-- Sender Message-->
-            <div class="d-flex col-md-9 col-xl-7 mb-3" id="chat"><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-1.jpg" alt="user">
-              <div class="ms-3">
-                <div class="bg-gray-200 rounded p-4 mb-2">
-                  <p class="text-sm mb-0">His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table.</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div>
-            </div>
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test2</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-            <!-- Sender Message-->
-            <div class="d-flex col-md-9 col-xl-7 mb-3" id="chat"><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-1.jpg" alt="user">
-              <div class="ms-3">
-                <div class="bg-gray-200 rounded p-4 mb-2">
-                  <p class="text-sm mb-0">test</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div>
-            </div>
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test3</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-
-
-            <!-- Reciever Message-->
-            <div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-              <div class="me-3">
-                <div class="bg-primary rounded p-4 mb-2">
-                  <p class="text-sm mb-0 text-white">test3</p>
-                </div>
-                <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-              </div><img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-            </div>
-            
-          </div>
+		
+		<th:block th:if="${session.loginMember!=null}">
+	        <div class="text-block d-print-none" th:if="${auth == 1} or ${session.loginMember.userrole == 'admin'}">
+	          <button class="btn btn-link ps-0" onclick="window.print()"><i class="fa fa-print me-2"></i>출력하기 </button>
+	          <button class="btn btn-link ps-0"><i class="fa fa-map-pin me-2"></i>공유하기 </button>
+	          <th:block th:if="${session.loginMember!=null} and ${camp.cstatus == 0} and (${session.loginMember.userno == organizer.userno} or ${session.loginMember.userrole == 'admin'})">
+		          <a th:href="@{/camping/camping-edit(cid=${camp.cid}, siteid=${camp.siteid})}">
+		          <button class="btn btn-link ps-0">
+		          	<i class="fa fa-pen-fancy me-2"></i>수정하기
+		          </button>
+		          </a>
+	          </th:block>
+	          
+	          <th:block th:if="${reviewWritten == 0}">
+		          <a th:href="@{/review/camping-reviewedit(cid=${camp.cid}, siteid=${camp.siteid})}">
+			          <button class="btn btn-link ps-0" 
+			          	th:if="${session.loginMember!=null} and ${camp.cstatus == 1}">
+			          	<i class="fa fa-pen-fancy me-2"></i>리뷰작성
+			          </button>
+		          </a>
+	          </th:block>
+	          <th:block th:if="${reviewWritten == 1}">
+	          	<li class="d-lg-none d-xl-inline-block">
+		          	<p class="btn btn-primary">리뷰작성완료</p>
+		          </li>
+	          </th:block>
+	          
+	          <form action ="/camping/endCamping" method="post" th:if="${camp.cstatus == 0}">
+		          <input type="hidden" th:value="${camp.cid}" name="cid"/>
+		          <input type="hidden" th:value="${camp.siteid}" name="siteid"/>
+		          <li class="nav-item mt-3 d-lg-none d-xl-inline-block">
+		          	<button class="btn btn-primary" type="submit">여행 종료하기 </button>
+		          </li>
+	          </form>
+	          <form action ="/camping/restartCamping" method="post" th:if="${camp.cstatus == 1}">
+		          <input type="hidden" th:value="${camp.cid}" name="cid"/>
+		          <input type="hidden" th:value="${camp.siteid}" name="siteid"/>
+		          <li class="nav-item mt-3 d-lg-none d-xl-inline-block">
+		          	<button class="btn btn-primary" type="submit">여행 재시작하기 </button>
+		          </li>
+	          </form>
+	        </div>
+        </th:block>
+        
+        <div class="text-block d-print-none" th:if="${session.loginMember!=null} and ${auth == 0}">
+        	<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary"
+              href="user-add-0.html">여행 가입하기 </a></li>
         </div>
-        <!-- 채팅 끝 -->
-        <!-- 채팅 입력창-->
-        <div class="input-group">
-          <textarea class="form-control border-0 p-4 bg-light text-sm" placeholder="메세지를 입력하세요" aria-describedby="button-sendMessage"></textarea>
-          <button class="btn btn-link" id="add" type="submit"><i class="fa fa-paper-plane"></i></button>
-        </div>
-
-        <script>
-          const chatBox = document.querySelector('#chatBox');
-          let chatIdx = 1;
-          let isScrollable = true;
-
-          document.querySelector('#add').addEventListener('click',()=>{
-              const div = document.createElement('div');
-              div.className='chat';
-              div.innerHTML = `<div class="d-flex col-md-9 col-xl-7 ms-auto mb-3" id="chat">
-                                  <div class="me-3">
-                                    <div class="bg-primary rounded p-4 mb-2">
-                                      <p class="text-sm mb-0 text-white">socket message</p>
-                                    </div>
-                                  <p class="small text-muted ms-3">12:00 PM | Aug 13</p>
-                                </div>
-                                <img class="avatar avatar-border-white flex-shrink-0" src="img/avatar/avatar-10.jpg" alt="user">
-                              </div>`;
-              chatBox.appendChild(div);
-
-              if(isScrollable) chatBox.scrollTop = 1e9;
-          })
-
-          chatBox.addEventListener('scroll', (e)=>{
-              const {scrollHeight, scrollTop, clientHeight} = e.target;
-
-              if(clientHeight + scrollTop < scrollHeight){
-                  isScrollable = false;
-                  return;
-              }
-              isScrollable = true;
-          })
-        </script>
-
-        <!--채팅 입력끝-->
-
-        <div class="text-block d-print-none">
-          <button class="btn btn-link ps-0" onclick="window.print()"><i class="fa fa-print me-2"></i>출력하기 </button>
-          <button class="btn btn-link ps-0"><i class="fa fa-map-pin me-2"></i>공유하기 </button>
-          <a th:href="@{/camping/camping-edit(cid=${camp.cid}, siteid=${camp.siteid})}">
-          <button class="btn btn-link ps-0" th:if="${session.loginMember!=null} and (${session.loginMember.userno == organizer.userno} or ${session.loginMember.userrole == 'admin'})"><i class="fa fa-pen-fancy me-2"></i>수정하기</button>
-          </a>
-          <li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary"
-              href="user-add-0.html">여행 종료하기</a></li>
-        </div>
+        
       </div>
       
       <!-- 지도 -->

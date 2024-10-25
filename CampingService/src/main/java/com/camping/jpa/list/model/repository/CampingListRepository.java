@@ -23,12 +23,28 @@ public interface CampingListRepository extends JpaRepository<CampingList, Intege
 	@Query("select c from CAMPING c"
 			+ " JOIN fetch c.campingmember m"
 			+ " JOIN fetch m.userlist u"
+			+ " WHERE c.cname like CONCAT('%',:searchValue,'%')"
+			+ " AND c.ctype = :ctype"
 			+ " ORDER BY c.cstart DESC")
-	List<CampingList> findByOrderByCstartDesc();
+	List<CampingList> findByOrderByCstartDesc(@Param("searchValue") String searchValue, @Param("ctype") int ctype);
+	
+	@Query("select c from CAMPING c"
+			+ " JOIN fetch c.campingmember m"
+			+ " JOIN fetch m.userlist u"
+			+ " WHERE c.cname like CONCAT('%',:searchValue,'%')"
+			+ " ORDER BY c.cstart DESC")
+	List<CampingList> findByOrderByCstartDesc(@Param("searchValue") String searchValue);
 	
 	CampingList findByCid(int cid);
 	
+	CampingList findByCname(String cname);
+	
 	CampingSite findBySiteid(int siteid);
+	
+	@Modifying
+	@Query("UPDATE CAMPING c SET c.cstatus = :status"
+			+ " WHERE c.cid = :cid")
+	int setStatusCamping(@Param("cid") int cid, @Param("status") int status);
 	
 }
 
