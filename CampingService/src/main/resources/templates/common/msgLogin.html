@@ -1,0 +1,21 @@
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script>
+		// 알림메세지를 띄움
+		
+		alert("[[${msg}]]");
+
+		// 페이지 이동
+		var link = "[[${uri}]]";
+		link = link.replaceAll('&amp;', '&');
+		location.replace(link);
+	</script>
+</body>
+</html>

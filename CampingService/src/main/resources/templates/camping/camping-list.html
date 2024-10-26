@@ -89,6 +89,9 @@
                   <p class="subtitle fw-normal text-sm mb-2" th:text="${#dates.format(listdata.cstart,'yyyy-MM-dd')}"></p>
                   <h6 class="card-title"><a class="text-decoration-none text-dark" th:href="@{/camping/camping-single(cid=${listdata.cid}, siteid=${listdata.siteid})}" th:text="${listdata.cname}"></a></h6>
                   <div class="d-flex card-subtitle mb-2" th:switch="${listdata.ctype}">
+                  <th:block th:case=0>
+                    <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="미정"></p>
+                  </th:block>
                   <th:block th:case=1>
                     <p class="flex-grow-1 mb-0 text-dark text-sm" th:text="오토캠핑"></p>
                   </th:block>

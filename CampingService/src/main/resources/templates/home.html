@@ -8,26 +8,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Price Slider Stylesheets -->
-    <link rel="stylesheet" href="vendor/nouislider/nouislider.css">
+    <link rel="stylesheet" th:href="@{/vendor/nouislider/nouislider.css}">
     <!-- Google fonts - Playfair Display-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700">
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700}">
     <!-- Google fonts - Poppins-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700">
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700}">
     <!-- swiper-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css}">
     <!-- Magnigic Popup-->
-    <link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" th:href="@{/vendor/magnific-popup/magnific-popup.css}">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.1/css/all.css}" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  
+  	<!-- jQuery-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Magnific Popup - Lightbox for the gallery-->
+    <script th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
+    <!-- Smooth scroll-->
+    <script th:src="@{/vendor/smooth-scroll/smooth-scroll.polyfills.min.js}"></script>
+    <!-- Bootstrap Select-->
+    <script th:src="@{/vendor/bootstrap-select/js/bootstrap-select.min.js}"></script>
+    <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
+    <script th:src="@{/vendor/object-fit-images/ofi.min.js}"></script>
+    <!-- Swiper Carousel                       -->
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js}"></script>
+    <script>var basePath = ''</script>
+    <!-- Main Theme JS file    -->
+    <script th:src="@{/js/theme.js}"></script>
   </head>
   <body style="padding-top: 72px;">
     <!-- 헤더 시작 -->
@@ -48,28 +66,24 @@
         <div class="row">
           <div class="col-xl-10">
             <div class="text-center text-lg-start">
-              <p class="subtitle letter-spacing-4 mb-2 text-secondary text-shadow">~~ 캠핑을 찾아서</p>
+              <p class="subtitle letter-spacing-4 mb-2 text-secondary text-shadow">즐거운 캠핑을 찾아서</p>
               <h1 class="display-3 fw-bold text-shadow">캠핑가자</h1>
             </div>
             <div class="search-bar mt-5 p-3 p-lg-1 ps-lg-4">
-              <form action="#">
+              <form name="sort" id="sort" th:action="@{/camping/camping-list}" method="get">
                 <div class="row">
-                  <div class="col-lg-4 d-flex align-items-center form-group">
-                    <input class="form-control border-0 shadow-0" type="text" name="search" placeholder="캠핑 이름 검색">
+                  <div class="col-lg-7 d-flex align-items-center form-group">
+                    <input class="form-control border-0 shadow-0" type="text" id="searchValue" name="searchValue" placeholder="캠핑 이름 검색">
                   </div>
-                  <div class="col-lg-3 d-flex align-items-center form-group">
-                    <div class="input-label-absolute input-label-absolute-right w-100">
-                      <label class="label-absolute" for="location"><i class="fa fa-crosshairs"></i><span class="sr-only">City</span></label>
-                      <input class="form-control border-0 shadow-0" type="text" name="location" placeholder="위치 검색" id="location">
-                    </div>
-                  </div>
+
                   <div class="col-lg-3 d-flex align-items-center form-group no-divider">
-                    <select class="selectpicker" title="캠핑 종류" data-style="btn-form-control">
-                      <option value="auto">오토캠핑</option>
-                      <option value="back">백패킹</option>
-                      <option value="car">차박캠핑</option>
-                      <option value="mini">미니멀캠핑</option>
-                      <option value="glam">글램핑</option>
+                    <select class="selectpicker" id="sortBy" name="sortBy" title="캠핑 종류" data-style="btn-form-control">
+                      <option value="0">전체</option>
+                      <option value="1">오토캠핑</option>
+                      <option value="2">백패킹</option>
+                      <option value="3">차박캠핑</option>
+                      <option value="4">미니멀캠핑</option>
+                      <option value="5">글램핑</option>
                     </select>
                   </div>
                   <div class="col-lg-2 d-grid">
@@ -93,44 +107,42 @@
           <!-- Additional required wrapper-->
           <div class="swiper-wrapper pb-5">
             <!-- Slides-->
-            <div class="swiper-slide h-auto px-2">
-              <div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a class="tile-link" href="category.html"></a><img class="bg-image" src="img/photo/new-york.jpg" alt="Card image">
+            <div class="swiper-slide h-auto px-2" th:each="campinglist : ${camp}">
+              <div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0">
+              	<a class="tile-link" th:href="@{/camping/camping-single(cid=${campinglist.cid}, siteid=${campinglist.siteid})}"></a>
+              		<th:block th:if="${campinglist.cpm == null}">
+              			<img class="bg-image" th:src="@{/img/temp.jpg}">
+              		</th:block>
+              		<th:block th:if="${campinglist.cpm != null}">
+              			<img class="bg-image" th:src="@{${campinglist.cpm}}">
+              		</th:block>
+              		
                 <div class="card-body overlay-content">
-                  <h6 class="card-title text-shadow text-uppercase">00캠핑</h6>
-                  <p class="card-text text-sm">오토캠핑</p>
+                  <h6 class="card-title text-shadow text-uppercase" th:text="${campinglist.cname}"></h6>
+                  
+                  <th:block th:switch="${campinglist.ctype}">
+                      <th:block th:case=0>
+	                    <p class="card-text text-sm" th:text="미지정"></p>
+	                  </th:block>
+	                  <th:block th:case=1>
+	                    <p class="card-text text-sm" th:text="오토캠핑"></p>
+	                  </th:block>
+	                  <th:block th:case=2>
+	                    <p class="card-text text-sm" th:text="백패킹"></p>
+	                  </th:block>
+	                  <th:block th:case=3>
+	                    <p class="card-text text-sm" th:text="차박캠핑"></p>
+	                  </th:block>
+	                  <th:block th:case=4>
+	                    <p class="card-text text-sm" th:text="미니멀캠핑"></p>
+	                    </th:block>
+	                  <th:block th:case=5>
+	                    <p class="card-text text-sm" th:text="글램핑"></p>
+					  </th:block>
+				  </th:block>
                 </div>
               </div>
             </div>
-            <div class="swiper-slide h-auto px-2">
-              <div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a class="tile-link" href="category.html"></a><img class="bg-image" src="img/photo/new-york.jpg" alt="Card image">
-                <div class="card-body overlay-content">
-                  <h6 class="card-title text-shadow text-uppercase">00캠핑</h6>
-                  <p class="card-text text-sm">오토캠핑</p>
-                </div>
-              </div>
-            </div><div class="swiper-slide h-auto px-2">
-              <div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a class="tile-link" href="category.html"></a><img class="bg-image" src="img/photo/new-york.jpg" alt="Card image">
-                <div class="card-body overlay-content">
-                  <h6 class="card-title text-shadow text-uppercase">00캠핑</h6>
-                  <p class="card-text text-sm">오토캠핑</p>
-                </div>
-              </div>
-            </div><div class="swiper-slide h-auto px-2">
-              <div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a class="tile-link" href="category.html"></a><img class="bg-image" src="img/photo/new-york.jpg" alt="Card image">
-                <div class="card-body overlay-content">
-                  <h6 class="card-title text-shadow text-uppercase">00캠핑</h6>
-                  <p class="card-text text-sm">오토캠핑</p>
-                </div>
-              </div>
-            </div><div class="swiper-slide h-auto px-2">
-              <div class="card card-poster gradient-overlay hover-animate mb-4 mb-lg-0"><a class="tile-link" href="category.html"></a><img class="bg-image" src="img/photo/new-york.jpg" alt="Card image">
-                <div class="card-body overlay-content">
-                  <h6 class="card-title text-shadow text-uppercase">00캠핑</h6>
-                  <p class="card-text text-sm">오토캠핑</p>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="swiper-pagination d-md-none"> </div>
         </div>
       </div>
@@ -144,36 +156,53 @@
             <p class="subtitle text-secondary">캠핑 스토리</p>
             <h2>캠핑 리뷰 둘러보기</h2>
           </div>
-          <div class="col-md-4 d-md-flex align-items-center justify-content-end"><a class="text-muted text-sm" href="blog.html">
-               See all articles<i class="fas fa-angle-double-right ms-2"></i></a></div>
         </div>
         <div class="row">
           <!-- 리뷰-->
-          <div class="col-lg-4 col-sm-6 mb-4 hover-animate">
-            <div class="card shadow border-0 h-100"><a href="post.html"><img class="img-fluid card-img-top" src="img/photo/photo-1512917774080-9991f1c4c750.jpg" alt="..."/></a>
-              <div class="card-body"><a class="text-uppercase text-muted text-sm letter-spacing-2" href="#">글램핑 </a>
-                <h5 class="my-2"><a class="text-dark" href="post.html">00 캠핑장 글램핑 후기</a></h5>
-                <p class="text-gray-500 text-sm my-3"><i class="far fa-clock me-2"></i>1월 16일, 2024</p>
-                <p class="my-2 text-muted text-sm">리뷰내용 ~~~~~~~~~~~~ 리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</p><a class="btn btn-link ps-0" href="post.html">전체 보기<i class="fa fa-long-arrow-alt-right ms-2"></i></a>
-              </div>
-            </div>
-          </div>
-          <!-- 리뷰-->
-          <div class="col-lg-4 col-sm-6 mb-4 hover-animate">
-            <div class="card shadow border-0 h-100"><a href="post.html"><img class="img-fluid card-img-top" src="img/photo/photo-1512917774080-9991f1c4c750.jpg" alt="..."/></a>
-              <div class="card-body"><a class="text-uppercase text-muted text-sm letter-spacing-2" href="#">글램핑 </a>
-                <h5 class="my-2"><a class="text-dark" href="post.html">00 캠핑장 글램핑 후기</a></h5>
-                <p class="text-gray-500 text-sm my-3"><i class="far fa-clock me-2"></i>1월 16일, 2024</p>
-                <p class="my-2 text-muted text-sm">리뷰내용 ~~~~~~~~~~~~ 리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</p><a class="btn btn-link ps-0" href="post.html">전체 보기<i class="fa fa-long-arrow-alt-right ms-2"></i></a>
-              </div>
-            </div>
-          </div><!-- 리뷰-->
-          <div class="col-lg-4 col-sm-6 mb-4 hover-animate">
-            <div class="card shadow border-0 h-100"><a href="post.html"><img class="img-fluid card-img-top" src="img/photo/photo-1512917774080-9991f1c4c750.jpg" alt="..."/></a>
-              <div class="card-body"><a class="text-uppercase text-muted text-sm letter-spacing-2" href="#">글램핑 </a>
-                <h5 class="my-2"><a class="text-dark" href="post.html">00 캠핑장 글램핑 후기</a></h5>
-                <p class="text-gray-500 text-sm my-3"><i class="far fa-clock me-2"></i>1월 16일, 2024</p>
-                <p class="my-2 text-muted text-sm">리뷰내용 ~~~~~~~~~~~~ 리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</p><a class="btn btn-link ps-0" href="post.html">전체 보기<i class="fa fa-long-arrow-alt-right ms-2"></i></a>
+          <div class="col-lg-4 col-sm-6 mb-4 hover-animate" th:each="reviewlist : ${review}">
+            <div class="card shadow border-0 h-100">
+            	<a th:href="@{/review/camping-review(crid=${reviewlist.crid})}">
+            		<img class="img-fluid card-img-top" th:src="@{${reviewlist.campinglist.cpm}}" style="height:17rem"/>
+            	</a>
+              <div class="card-body">
+              	<th:block th:switch="${reviewlist.campinglist.ctype}">
+                  <th:block th:case=0>
+                    <a th:href="@{/camping/camping-list(sortBy=${reviewlist.campinglist.ctype})}">
+                    	<p class="text-uppercase text-muted text-sm letter-spacing-2" th:text="미정"></p>
+                    </a>
+                  </th:block>
+                  <th:block th:case=1>
+                    <a th:href="@{/camping/camping-list(sortBy=${reviewlist.campinglist.ctype})}">
+                    	<p class="text-uppercase text-muted text-sm letter-spacing-2" th:text="오토캠핑"></p>
+                    </a>
+                  </th:block>
+                  <th:block th:case=2>
+                    <a th:href="@{/camping/camping-list(sortBy=${reviewlist.campinglist.ctype})}">
+                    	<p class="text-uppercase text-muted text-sm letter-spacing-2" th:text="백패킹"></p>
+                    </a>
+                  </th:block>
+                  <th:block th:case=3>
+                    <a th:href="@{/camping/camping-list(sortBy=${reviewlist.campinglist.ctype})}">
+                    	<p class="text-uppercase text-muted text-sm letter-spacing-2" th:text="차박캠핑"></p>
+                    </a>
+                  </th:block>
+                  <th:block th:case=4>
+                    <a th:href="@{/camping/camping-list(sortBy=${reviewlist.campinglist.ctype})}">
+                    	<p class="text-uppercase text-muted text-sm letter-spacing-2" th:text="미니멀캠핑"></p>
+                    </a>
+                    </th:block>
+                  <th:block th:case=5>
+                    <a th:href="@{/camping/camping-list(sortBy=${reviewlist.campinglist.ctype})}">
+                    	<p class="text-uppercase text-muted text-sm letter-spacing-2" th:text="글램핑"></p>
+                    </a>
+				  </th:block>
+				</th:block>
+                <h5 class="my-2"><a class="text-dark" th:href="@{/review/camping-review(crid=${reviewlist.crid})}" th:text="${reviewlist.crname}"></a></h5>
+                <p class="text-gray-500 text-sm my-3" th:text="${#dates.format(reviewlist.crcreatedate,'MM월 dd일, yyyy')}"><i class="far fa-clock me-2"></i></p>
+                <p class="my-2 text-muted text-sm" th:text="${reviewlist.crcontent}"></p>
+                <p class="my-2 text-muted text-sm" th:text="'별점 ' + ${reviewlist.crrating} + '점'"></p>
+                <a class="btn btn-link ps-0" th:href="@{/review/camping-review(crid=${reviewlist.crid})}">전체 보기
+                	<i class="fa fa-long-arrow-alt-right ms-2"></i></a>
               </div>
             </div>
           </div>
@@ -190,101 +219,30 @@
               <div class="itemdetail__content-box">
                 <div class="itemdetail__content-box__title">
                   <h3>공지사항</h3>
-                  <a href="/store_news" class="xet-btn btn-text btn-next">전체보기</a>
+                  <a href="/board/camping-board?page=1" class="xet-btn btn-text btn-next">전체보기</a>
                 </div>
                 <div class="xet-code">
                   <div class="xe-widget-wrapper " style="">
                     <div style="*zoom:1;padding:0px 0px 0px 0px !important;">
     
                       <ul class="xetemplate-v5-list">
-                        <li>
-                          <a href="/202912" class="list__link">
+                        <li th:each="noticelist : ${notice}">
+                          <a th:href="@{/board/camping-boardsingle(bid=${noticelist.bid})}" class="list__link">
                             <div class="list__link__subject">
                               <span class="icons">
                                 <span class="icon-new"></span>
                               </span>
                               <span class="category">공지사항&nbsp;-&nbsp;</span>
-                              <span class="subject">[필독] 캠핑가자 커뮤니티 규정 & 신문고</span>
+                              <span class="subject" th:text="${noticelist.btitle}"></span>
     
                             </div>
                             <div class="list__link__date">
     
-                              <span class="regdate">2024.09.05</span>
+                              <span class="regdate" th:text="${#dates.format(noticelist.bcreatedate,'yyyy.MM.dd')}"></span>
                             </div>
                           </a>
                         </li>
-                        <li>
-                          <a href="/261184" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">이벤트&nbsp;-&nbsp;</span>
-                              <span class="subject"> 오픈기념 00 참여 이벤트</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                              <span class="regdate">2024.09.05</span>
-                            </div>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/261184" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">이벤트&nbsp;-&nbsp;</span>
-                              <span class="subject"> 00이벤트</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                              <span class="regdate">2024.09.05</span>
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/261184" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">이벤트&nbsp;-&nbsp;</span>
-                              <span class="subject"> 00이벤트</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                              <span class="regdate">2024.09.05</span>
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/261184" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">이벤트&nbsp;-&nbsp;</span>
-                              <span class="subject"> 00이벤트</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                              <span class="regdate">2024.09.05</span>
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/261184" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">이벤트&nbsp;-&nbsp;</span>
-                              <span class="subject"> 00이벤트</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                              <span class="regdate">2024.09.05</span>
-                            </div>
-                          </a>
-                        </li>
+                        
                       </ul>
                     </div>
                   </div>
@@ -294,93 +252,30 @@
             <div class="itemdetail__content-box" style="margin-left:10rem">
               <div class="itemdetail__content-box__title">
                 <h3>캠핑 QnA</h3>
-                <a href="/faqs" class="xet-btn btn-text btn-next">전체보기</a>
+                <a href="/board/camping-board?page=1&category=2" class="xet-btn btn-text btn-next">전체보기</a>
               </div>
               <div class="xet-code">
                 <div class="xe-widget-wrapper " style="">
                   <div style="*zoom:1;padding:0px 0px 0px 0px !important;">
                     <div class="xetemplate-v5-skin">
                       <ul class="xetemplate-v5-list">
-                        <li>
-                          <a href="/83449" class="list__link">
+                        <li th:each="boardlist : ${board}">
+                          <a th:href="@{/board/camping-boardsingle(bid=${boardlist.bid})}" class="list__link">
                             <div class="list__link__subject">
                               <span class="icons">
+                                <span class="icon-new"></span>
                               </span>
-                              <span class="category">질문&nbsp;-&nbsp;</span>
-                              <span class="subject">오토캠핑시 00 제품 챙겨야 하나요</span>
+                              <span class="category">공지사항&nbsp;-&nbsp;</span>
+                              <span class="subject" th:text="${boardlist.btitle}"></span>
     
                             </div>
                             <div class="list__link__date">
     
+                              <span class="regdate" th:text="${#dates.format(boardlist.bcreatedate,'yyyy.MM.dd')}"></span>
                             </div>
                           </a>
                         </li>
-                        <li>
-                          <a href="/83449" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">질문&nbsp;-&nbsp;</span>
-                              <span class="subject">오토캠핑시 00 제품 챙겨야 하나요</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/83449" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">질문&nbsp;-&nbsp;</span>
-                              <span class="subject">오토캠핑시 00 제품 챙겨야 하나요</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/83449" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">질문&nbsp;-&nbsp;</span>
-                              <span class="subject">오토캠핑시 00 제품 챙겨야 하나요</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/83449" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">질문&nbsp;-&nbsp;</span>
-                              <span class="subject">오토캠핑시 00 제품 챙겨야 하나요</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                            </div>
-                          </a>
-                        </li><li>
-                          <a href="/83449" class="list__link">
-                            <div class="list__link__subject">
-                              <span class="icons">
-                              </span>
-                              <span class="category">질문&nbsp;-&nbsp;</span>
-                              <span class="subject">오토캠핑시 00 제품 챙겨야 하나요</span>
-    
-                            </div>
-                            <div class="list__link__date">
-    
-                            </div>
-                          </a>
-                        </li>
+                        
                       </ul>
                     </div>
                   </div>
@@ -490,22 +385,6 @@
       injectSvgSprite('https://demo.bootstrapious.com/directory/1-4/icons/orion-svg-sprite.svg'); 
       
     </script>
-    <!-- jQuery-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Magnific Popup - Lightbox for the gallery-->
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <!-- Smooth scroll-->
-    <script src="vendor/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
-    <!-- Bootstrap Select-->
-    <script src="vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-    <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
-    <script src="vendor/object-fit-images/ofi.min.js"></script>
-    <!-- Swiper Carousel                       -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
-    <script>var basePath = ''</script>
-    <!-- Main Theme JS file    -->
-    <script src="js/theme.js"></script>
+
   </body>
 </html>

@@ -18,12 +18,12 @@
             <li class="nav-item"><a class="nav-link" th:href="@{/camping/camping-start}">캠핑 시작하기</a>
             </li>
 
-            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle " id="docsDropdownMenuLink" href="index.html" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle " id="docsDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  여행게시판</a>
-              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="docsDropdownMenuLink">
-                <a class="dropdown-item" href="docs/docs-introduction.html">공지사항 </a>
-                <a class="dropdown-item" href="docs/docs-directory-structure.html">캠핑 질문 </a>
-                <a class="dropdown-item" href="docs/docs-gulp.html">캠핑 팁 </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="docsDropdownMenuLink" >
+              <a class="dropdown-item" th:href="@{/board/camping-board?page=1}">게시판 </a>
+                <a class="dropdown-item" th:href="@{/board/camping-board?page=1&category=2}">캠핑 질문 </a>
+                <a class="dropdown-item" th:href="@{/board/camping-board?page=1&category=3}">캠핑 팁 </a>
             </li>
 			
             <div class="d-grid gap-2 kakao-button" th:if="${session.loginMember == null}">

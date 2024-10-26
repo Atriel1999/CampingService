@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.camping.jpa.review.model.repository.CampingReviewImageRepository;
@@ -16,13 +17,17 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class CampingReviewService {
 	@Autowired
 	CampingReviewRepository repo;
 	
 	@Autowired
 	CampingReviewImageRepository repoImage;
+	
+	public List<CampingReview> findReviewByTop3(){
+		return repo.findReviewByTop3();
+	}
 	
 	public CampingReview saveReview(CampingReview review) {
 		return repo.save(review);

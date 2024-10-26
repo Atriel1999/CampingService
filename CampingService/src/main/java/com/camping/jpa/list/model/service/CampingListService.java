@@ -67,6 +67,10 @@ public class CampingListService {
 	@Autowired
 	private PaymentApproveRepository repo6;
 	
+	public List<CampingList> findByTop5(){
+		return repo2.findByTop5();
+	}
+	
 	public List<PaymentApprove> findPaymentList(int cid) {
 		return repo6.findPaymentList(cid);
 	}

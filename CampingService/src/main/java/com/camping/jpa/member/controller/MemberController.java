@@ -24,6 +24,7 @@ import com.camping.jpa.list.controller.CampingListController;
 import com.camping.jpa.list.model.vo.User;
 import com.camping.jpa.member.model.service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,7 @@ public class MemberController {
 	private KaKaoService kakaoService;
 	
 	@GetMapping("/login")
-	public String login(Model model) { //, String memberId, String memberPwd
+	public String login(HttpServletRequest request, Model model) { //, String memberId, String memberPwd
 //		log.debug("@@@@@ Login : " + memberId + ", " + memberPwd);
 //		
 //		Member loginMember = service.login(memberId, memberPwd);
@@ -52,13 +53,18 @@ public class MemberController {
 //			model.addAttribute("location", "/");
 //			return "login";
 //		}
+		String uri = request.getHeader("Referer");
+	    if (uri != null && !uri.contains("/login")) {
+	    	log.info("dbg1111 uri:" + uri);
+	        request.getSession().setAttribute("prevPage", uri);
+	    }
 		
 		return "login/login";
 	}
 
 	
 	@GetMapping("/outh2/login/kakao")
-	public String kakaoLogin(Model model, @RequestParam("code") String code) {
+	public String kakaoLogin(HttpServletRequest request, Model model, @RequestParam("code") String code) {
 		log.info("로그인 요청");
 		if(code != null) {
 			try {
@@ -68,15 +74,26 @@ public class MemberController {
 				String kakaoToken = (String) map.get("id");
 				User loginMember = service.loginKaKao(kakaoToken);
 				
+				String prevPage = (String) request.getSession().getAttribute("prevPage");
+		        if (prevPage != null) {
+		            request.getSession().removeAttribute("prevPage");
+		        }
+				
 				if(loginMember != null) { // 로그인 성공
 					model.addAttribute("loginMember", loginMember); // 세션으로 저장되는 코드, 이유: @SessionAttributes
 					System.out.println("listdbg2(loginMember): " + loginMember);
-					return "redirect:/home";
+					
+					log.info("dbg2222: " + prevPage);
+					
+					model.addAttribute("msg", "로그인에 성공하였습니다.");
+					model.addAttribute("uri", prevPage);
+					return "common/msgLogin";
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		
 		model.addAttribute("msg", "로그인에 실패하였습니다.");
 		model.addAttribute("location","/login");
 		return "common/msg";
