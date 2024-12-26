@@ -1,6 +1,6 @@
 package com.camping.jpa.list.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +42,12 @@ public class User {
 	public String userrole;
 	@Column(name = "KAKAOTOKEN")
 	public String kakaotoken;
+	@Column(name = "USERSTATUS")
+	public int userstatus;
+	@Column(name = "USERBANDATE")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	public Date userbandate;
+	
 	
 	@OneToMany(mappedBy = "userlist", fetch =FetchType.EAGER)
 	public List<CampingMember> memberlist = new ArrayList<>();

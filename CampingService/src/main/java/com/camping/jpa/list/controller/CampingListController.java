@@ -170,11 +170,6 @@ public class CampingListController {
 //		return "common/msg";
 	}
 	
-//	@PostMapping("/camping-edit")
-//	public String uploadCamping(Model model, ) {
-//		
-//		return "/camping-single";
-//	}
 	
 	@PostMapping("/camping-edit")
 	public String upload(Model model, MultipartHttpServletRequest request, @RequestParam HashMap<String, Object> parameter,
@@ -247,6 +242,40 @@ public class CampingListController {
 		}
 	}
 	
+	@PostMapping("/registerCamping")
+	public String registerCamping(Model model, @SessionAttribute(name="loginMember") User loginMember, 
+			@RequestParam(value = "cid") int cid, @RequestParam(value = "userno") String userno, @RequestParam(value = "siteid") int siteid) {
+		
+		CampingMember member = new CampingMember();
+		
+		CampingList tempCamp = new CampingList();
+		User tempUser = new User();
+		
+		tempCamp.setCid(cid);
+		tempUser.setUserno(userno);
+		
+		member.setCampinglist(tempCamp);
+		member.setUserlist(tempUser);
+		
+		Date date = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat.format(date);
+		member.setJoindate(date);
+		member.setCaauth(2);
+		
+		CampingMember result = service.insertMember(member);
+		
+		if(result != null) {
+			model.addAttribute("msg", "캠핑에 가입했습니다");
+			model.addAttribute("location", "/camping/camping-single?cid=" + cid + "&siteid=" + siteid);
+		} else {
+			model.addAttribute("msg", "캠핑에 가입에 실패했습니다");
+			model.addAttribute("location", "/camping/camping-single?cid=" + cid + "&siteid=" + siteid);
+		}
+		
+		return "/common/msg";
+	}
+	
 
 		
 	@GetMapping("/camping-list")
@@ -288,6 +317,16 @@ public class CampingListController {
 		model.addAttribute("sortBy", sortBy);
 
 		return "/camping/camping-list";
+	}
+	
+	@ResponseBody
+	@PostMapping(value ="/search.action")
+	public Object searchCampingName(@RequestParam("searchValue") String searchValue) {
+
+		List<CampingSite> siteList = service.findBySiteidTop5(searchValue);
+		
+		return siteList;
+		
 	}
 	
 	@GetMapping("/camping-single")
@@ -336,9 +375,11 @@ public class CampingListController {
 				model.addAttribute("auth", auth);
 			}
 			
-			if(size > 2) {
-				for(int i=0; i< size-2; i++) {
-					participant.add(camp.getCampingmember().get(i+2).getUserlist());
+			if(size > 1) {
+				for(int i=0; i< size; i++) {
+					if(!organizer.getUserno().equals(camp.getCampingmember().get(i).getUserlist().getUserno())) {
+						participant.add(camp.getCampingmember().get(i).getUserlist());
+					}
 				}
 			}
 		} else {

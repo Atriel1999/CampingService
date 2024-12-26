@@ -29,6 +29,7 @@ import com.camping.jpa.board.model.vo.DisplayedImageDTO;
 import com.camping.jpa.board.model.vo.PageInfo;
 import com.camping.jpa.board.model.vo.SearchValue;
 import com.camping.jpa.list.model.service.CampingListService;
+import com.camping.jpa.list.model.vo.CampingSite;
 import com.camping.jpa.list.model.vo.User;
 
 import lombok.extern.log4j.Log4j2;
@@ -51,7 +52,8 @@ public class BoardController {
 	}
 	
 	@PostMapping("/camping-boardedit")
-	public String updateboardInfo(Model model, @ModelAttribute("board") Board board, @SessionAttribute(name="loginMember", required=false) User loginMember) {
+	public String updateboardInfo(Model model, @ModelAttribute("board") Board board, 
+			@SessionAttribute(name="loginMember", required=false) User loginMember) {
 		log.info("dbg1: " + board);
 		
 		Date date = new Date();
@@ -67,6 +69,7 @@ public class BoardController {
 		model.addAttribute("location", "/board/camping-board?page=1");
 		return "/common/msg";
 	}
+	
 	
 	@ResponseBody
 	@PostMapping("/image")

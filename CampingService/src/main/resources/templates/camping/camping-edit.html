@@ -34,6 +34,21 @@
     integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
     crossorigin=""></script>
   <!-- Available tile layers-->
+  <script>
+  	function selectSite(e){
+  		var text = $(e).text();
+  		var siteNum = $(e).children('.tempid')[0].value
+  		console.log(siteNum);
+  		document.getElementById("siteid").value = siteNum;
+  		var word = text.split('*');
+
+  		if(document.getElementById("siteaddressname").innerText == '주소지'){
+  			var temp = document.getElementById("siteaddress").value
+  			document.getElementById("siteaddressname").innerText = '주소지 (변경 전 주소: ' + temp + ')';  
+  		}
+		document.getElementById("siteaddress").value = word[0];
+	}
+  </script>
   
   <!-- Price Slider Stylesheets -->
     <link rel="stylesheet" th:href="@{/vendor/nouislider/nouislider.css}">
@@ -223,14 +238,71 @@
 
         <div class="row pt-4">
           <div class="mb-4 col-md-6">
-            <label class="form-label" for="name">주소지</label>
-            <input class="form-control" type="text" th:value="${site.sitecompany}">
+            <label class="form-label" for="name" id="siteaddressname">주소지</label>
+            <input class="form-control" type="text" id="siteaddress" th:value="${site.sitecompany}" readonly>
+            <input type="hidden" id="siteid" name="siteid" th:value="${site.siteid}">
+            
+            <button class="btn btn-outline-primary mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#leaveComment" aria-expanded="false" aria-controls="leaveComment">캠핑장 변경</button>
+            
           </div>
+
           <div class="mb-4 col-md-6">
             <label class="form-label" for="name">전화번호</label>
             <input class="form-control" type="text" name="cphone" id="cphone" th:value="${camp.cphone}">
           </div>
         </div>
+        
+       <!-- 캠핑장 검색 modal -->
+       <div class="collapse p-4" id="leaveComment" style="background-color : lightpink; border-radius: 30px 10px 50px;"> 
+       		<div class="mt-4">
+                <h5 class="mb-4">캠핑장 이름 검색하기</h5>
+                  <div class="mb-4">
+					<input class="form-control" type="text" name="searchCamping" id="searchCamping">
+                  </div>
+                  <button class="btn btn-primary" id="startSearch" name="startSearch" type="button"><i class="far fa-comment"></i> 검색하기 </button>
+                  
+                  <hr/ class="mt-4 mb-4">
+                  <div id="searchResult"></div>
+        	</div>
+        </div>
+        
+        <script>
+          	var searchCamp = document.querySelector("#startSearch");
+          	
+          	searchCamp.addEventListener("click", function(){
+          		
+          		var searchValue = document.querySelector("#searchCamping").value;
+          		var searchData = { "searchValue" : searchValue};
+          		
+          		$.ajax({
+          			url: "/camping/search.action",
+          			type: 'post',
+          			data: searchData,
+          			success : function(data) {
+          				document.getElementById("searchResult").innerHTML = "";
+          				
+          				$(data).each(function(){
+          					var resultdata = '';
+          					$result = $('#searchResult');
+
+          					resultdata += "<a href=\"#\" onclick=\"selectSite(this);\" class=\"list__link mt-2\">";
+          					resultdata += "<input class=\"tempid\" type=\"hidden\" value=\" "+ this.siteid +" \">";
+          					resultdata += "<div class=\"list__link__subject\">";
+          					resultdata += "<span class=\"category\">" + this.sitecompany + "</span>";
+          					resultdata += "<span class=\"subject\">* (" + this.siteinduty + ")</span>";
+          					resultdata += "</div><div class=\"list__link__date\">";
+          					resultdata += "<span class=\"regdate\">" + this.siteaddr + "</span></div></a>";
+          					
+          					$result.append(resultdata);
+          				})
+          		    },
+          			error : function() {
+          				alert("error");
+          			}
+          		})
+          	})
+        </script>
+        
 
         <div class="text-block">
           <div class="d-flex align-items-center justify-content-between mb-3">

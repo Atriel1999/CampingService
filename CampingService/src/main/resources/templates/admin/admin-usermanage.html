@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>캠핑가자</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Price Slider Stylesheets -->
+    <link rel="stylesheet" th:href="@{/vendor/nouislider/nouislider.css}">
+    <!-- Google fonts - Playfair Display-->
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700}">
+    <!-- Google fonts - Poppins-->
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700}">
+    <!-- swiper-->
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css}">
+    <!-- Magnigic Popup-->
+    <link rel="stylesheet" th:href="@{/vendor/magnific-popup/magnific-popup.css}">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.1/css/all.css}" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    
+    <!-- jQuery-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <!-- Bootstrap JS bundle - Bootstrap + PopperJS-->
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Magnific Popup - Lightbox for the gallery-->
+    <script th:src="@{/vendor/magnific-popup/jquery.magnific-popup.min.js}"></script>
+    <!-- Smooth scroll-->
+    <script th:src="@{/vendor/smooth-scroll/smooth-scroll.polyfills.min.js}"></script>
+    <!-- Bootstrap Select-->
+    <script th:src="@{/vendor/bootstrap-select/js/bootstrap-select.min.js}"></script>
+    <!-- Object Fit Images - Fallback for browsers that don't support object-fit-->
+    <script th:src="@{/vendor/object-fit-images/ofi.min.js}"></script>
+    <!-- Swiper Carousel                       -->
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js}"></script>
+    <script>var basePath = ''</script>
+    <!-- Main Theme JS file    -->
+    <script th:src="@{/js/theme.js}"></script>
+    <!-- custom script of admin page-->
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+  </head>
+  <body>
+    <section class="d-sm-flex">      
+      	<!-- Sidebar -->
+    		<th:block th:replace="~{common/side :: sideFragment}"></th:block>
+        <!-- End of Sidebar -->
+        
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column admin-item">
+            <!-- Main Content -->
+            <div id="content">
+		        <div class="d-flex justify-content-between align-items-end mb-5">
+		          <h1 class="hero-heading mb-0">사용자 관리</h1><a class="btn btn-link text-muted" href="#">캠핑 | 사용자 관리</a>
+		        </div>
+		        <div class="d-flex justify-content-between align-items-center flex-column flex-lg-row mb-5">
+		          <div class="me-3">
+		            <p class="mb-3 mb-lg-0"><strong><span th:text="${#lists.size(data)}"></span></strong> 명의 유저가 검색되었습니다</p>
+		          </div>
+		
+		          <div class="input-label-absolute input-label-absolute-left input-expand"> 
+		            <label class="label-absolute" for="search_search"><i class="fa fa-search"></i><span class="sr-only"></span></label>
+		            <form th:action="@{/admin/admin-usermanage}" method="GET">
+		            	<input class="form-control form-control-sm border-0 shadow-0 bg-gray-200" id="searchName" name="searchName" th:value="${searchName}" placeholder="사용자 이름 검색" aria-label="Search" type="search">
+		            </form>
+		          </div>
+		        </div>
+		        
+		        <div class="list-group shadow mb-5">
+		          <!-- 어드민페이지 item-->
+		          <div class="list-group-item list-group-item-action p-4" th:each="listdata : ${data}">
+		            <div class="row">
+		              <div class="col-lg-2 align-self-center mb-4 mb-lg-0">
+		                <div class="d-flex align-items-center mb-3">
+		                  <h2 class="h5 mb-0" th:text="${listdata.username}"></h2><img class="avatar avatar-sm avatar-border-white ms-3"
+		                    th:src="@{${listdata.userimage}}" alt="오류">
+		                </div>
+		              </div>
+		              <div class="col-lg-10">
+		                <div class="row">
+		                  <div class="col-4 col-md-4 col-lg-2 py-3 mb-3 mb-lg-0">
+		                    <h6 class="label-heading">유저가입일</h6>
+		                    <p class="text-sm fw-bold" th:text="${#dates.format(listdata.usercreated,'yyyy-MM-dd hh:mm')}"></p>
+		                  </div>
+		                  <div class="col-4 col-md-4 col-lg-2 py-3">
+		                    <h6 class="label-heading">전화번호 </h6>
+		                    <p class="text-sm fw-bold mb-0" 
+		                    	th:text="${listdata.userphone}"></p>
+		                  </div>
+		                  <div class="col-4 col-md-4 col-lg-1 py-3">
+		                    <h6 class="label-heading">권한</h6>
+		                    <p class="text-sm fw-bold" th:text="${listdata.userrole}"></p>
+		                  </div>
+		                  <div class="col-6 col-md-4 col-lg-2 py-3">
+		                    <h6 class="label-heading">카카오토큰</h6>
+		                    <p class="text-sm fw-bold" th:text="${listdata.kakaotoken}"></p>
+		                  </div>
+		                  
+		                  <div class="col-6 col-md-4 col-lg-1 py-3">
+		                    <h6 class="label-heading">유저상태</h6>
+		                    <th:block th:if="${listdata.userstatus == 0}">
+		                    	<p class="text-sm fw-bold">정상</p>
+		                    </th:block>
+		                    <th:block th:if="${listdata.userstatus == 1}">
+		                    	<p class="text-sm fw-bold">임시정지</p>
+		                    </th:block>
+		                  </div>
+		                  
+		                  <div class="col-6 col-lg-2 align-self-center">
+		                  	<th:block th:if="${listdata.userrole == 'user'}">
+		                  		<form th:action="@{/admin/userSetAdmin}" method="POST">
+		                  			<input name="usersetno", id="usersetno" th:value="${listdata.userno}" type="hidden">
+		                    		<button class="btn-outline-primary text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>관리자 권한 등록</button>
+		                    	</form>
+		                    </th:block>
+		                    <th:block th:if="${listdata.userrole == 'admin'}">
+		                    	<form th:action="@{/admin/userRevokeAdmin}" method="POST">
+		                    		<input name="userrevokeno", id="userrevokeno" th:value="${listdata.userno}" type="hidden">
+		                    		<button class="text-warning text-sm text-uppercase me-4 me-lg-0"> <i class="fa fa-check fa-fw me-2"> </i>관리자 권한 해제</button>
+		                    	</form>
+		                    </th:block>
+		                    <th:block th:if="${listdata.userstatus == 0}">
+			                    <form th:action="@{/admin/userbanned}" method="POST">
+			                    	<input name="userretrictno", id="userretrictno" th:value="${listdata.userno}" type="hidden">
+			                    	<button class="btn btn-outline-danger text-sm text-uppercase mt-3"> <i class="fa fa-times fa-fw me-2"> </i>유저 임시정지</button>
+			                    </form>
+		                    </th:block>
+		                    <th:block th:if="${listdata.userstatus == 1}">
+		                    	<button class="btn btn-danger text-sm text-uppercase mt-3"> <i class="fa fa-times fa-fw me-2"> </i>정지된 유저</button>
+		                    </th:block>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+          	</div>
+		  </div>
+        </div>
+    </section>
+    <!-- JavaScript files-->
+    <script>
+      // ------------------------------------------------------- //
+      //   Inject SVG Sprite - 
+      //   see more here 
+      //   https://css-tricks.com/ajaxing-svg-sprite/
+      // ------------------------------------------------------ //
+      function injectSvgSprite(path) {
+      
+          var ajax = new XMLHttpRequest();
+          ajax.open("GET", path, true);
+          ajax.send();
+          ajax.onload = function(e) {
+          var div = document.createElement("div");
+          div.className = 'd-none';
+          div.innerHTML = ajax.responseText;
+          document.body.insertBefore(div, document.body.childNodes[0]);
+          }
+      }    
+      // to avoid CORS issues when viewing using file:// protocol, using the demo URL for the SVG sprite
+      // use your own URL in production, please :)
+      // https://demo.bootstrapious.com/directory/1-0/icons/orion-svg-sprite.svg
+      //- injectSvgSprite('${path}icons/orion-svg-sprite.svg'); 
+      injectSvgSprite('https://demo.bootstrapious.com/directory/1-4/icons/orion-svg-sprite.svg'); 
+      
+    </script>
+
+  </body>
+</html>

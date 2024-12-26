@@ -17,4 +17,8 @@ public interface CampingSiteRepository extends JpaRepository<CampingSite, Intege
 	@Query("select s from CAMPING_SITE s WHERE s.siteid = :siteid")
 	CampingSite findBySiteid(@Param("siteid") int siteid);
 	
+	@Query(value = "select * from CAMPING_SITE s" 
+			+ " WHERE s.sitecompany like CONCAT('%',:sitename,'%')"
+			+ " LIMIT 10", nativeQuery = true)
+	List<CampingSite> findBySiteidTop5(@Param("sitename") String sitename);	
 }

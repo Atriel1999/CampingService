@@ -15,6 +15,8 @@ import com.camping.jpa.board.model.repository.BoardReplyRepository;
 import com.camping.jpa.board.model.repository.BoardRepository;
 import com.camping.jpa.board.model.vo.Board;
 import com.camping.jpa.board.model.vo.BoardReply;
+import com.camping.jpa.list.model.repository.CampingSiteRepository;
+import com.camping.jpa.list.model.vo.CampingSite;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +31,7 @@ public class BoardService {
 	
 	@Autowired
 	private BoardReplyRepository repoReply;
-	
+		
 	public List<Board> findBoardByTop6(){
 		return repo.findBoardByTop6();
 	}

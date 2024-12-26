@@ -14,24 +14,26 @@ import java.util.Iterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXParseException;
-	/*https://apis.data.go.kr/B551011/GoCamping/basedList?
-	 * serviceKey=sHpLWgiDMLTAM87%2BhYNCvIMekwE38WDEWlRi14j7FuNOn7oRMkfFoVCne1d7TmSS3G1KtCBCq2wOjpbmkNNyzA%3D%3D
-	 * &numOfRows=10&pageNo=1&MobileOS=WIN&MobileApp=AppTest
-	 * */
+
 public class CampingParsingData {
 	public static Connection conn = null;
-	public static PreparedStatement pstmt = null; // ★★★★★
+	public static PreparedStatement pstmt = null;
 	public static ResultSet rs = null;
 	
 	public static String driverClass = "com.mysql.cj.jdbc.Driver";
 	public static String url = "jdbc:mysql://localhost:3306/camping";
-	public static String user = "user";
-	public static String password = "1234";
 	
-
+	public static String user = "";
+	public static String password = "";
 	
+//	@Value("${spring.datasource.username}")
+//	private static String user;
+//	
+//	@Value("${spring.datasource.password}")
+//	private static String password;
 	
 	public static final String KEY = "sHpLWgiDMLTAM87%2BhYNCvIMekwE38WDEWlRi14j7FuNOn7oRMkfFoVCne1d7TmSS3G1KtCBCq2wOjpbmkNNyzA%3D%3D";
 

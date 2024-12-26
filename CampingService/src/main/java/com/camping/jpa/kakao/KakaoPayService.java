@@ -1,6 +1,7 @@
 package com.camping.jpa.kakao;
 
 import java.net.URI;
+
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import com.camping.jpa.kakao.model.repository.PaymentApproveRepository;
 import com.camping.jpa.kakao.model.repository.PaymentRequestRepository;
 import com.camping.jpa.kakao.model.vo.PaymentRequest;
 import com.camping.jpa.list.model.vo.CampingList;
+import com.camping.jpa.list.model.vo.CampingSite;
 import com.camping.jpa.list.model.vo.User;
 import com.camping.jpa.kakao.model.vo.PaymentApprove;
 
@@ -37,7 +39,7 @@ public class KakaoPayService {
 	private static final String HOST = "https://open-api.kakaopay.com/online";
 	
 	@Value("${kakao.kakaopay.secretKeyDev}")
-	 private String secretKey;
+	private String secretKey;
 											
 
 	private KakaoPayReadyVO kakaoPayReadyVO;
@@ -85,7 +87,9 @@ public class KakaoPayService {
 		tempData.setUser(tempUser);
 		
 //		tempData.setUserno(param.get("userno"));
-		tempData.setSiteid(Integer.parseInt(param.get("siteid")));
+		CampingSite tempSite = new CampingSite();
+		tempSite.setSiteid(Integer.parseInt(param.get("siteid")));
+		tempData.setSiteid(tempSite);
 //		tempData.setCid(Integer.parseInt(param.get("cid")));
 
 		HttpEntity<Map<String, String>> body = new HttpEntity<>(params, headers); //new HttpEntity<Map<String, String>>(params, headers);

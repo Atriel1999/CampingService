@@ -195,22 +195,25 @@
 				
 	            <input type="hidden" th:value="${site.siteid}" name="siteid"/>
 	            <input type="hidden" name="quantity" value="1">
-	            <div th:if="${session.loginMember != null}">
-	              	<button class="btn btn-link ps-0" type="submit" value="확인" th:if="${session.loginMember.userno == organizer.userno or session.loginMember.userrole == 'admin'}">결제하기</button>
+	            <th:block th:if="${session.loginMember != null}">
+	            	<th:block th:if="${payment == null}">
+	              		<button class="btn btn-link ps-0" type="submit" value="확인" 
+	              			th:if="${session.loginMember.userno == organizer.userno or session.loginMember.userrole == 'admin'}">결제하기</button>
+	              	</th:block>
+              	</th:block>
+              	<div th:if="${payment != null}">
+              		<p class="btn btn-primary">결제완료</p>
               	</div>
-              		<div th:if="${payment != null}">
-              			<p class="btn btn-primary">결제완료</p>
-              		</div>
-              		<div th:if="${session.loginMember != null}">
-	              		<div th:if="${payment == null and session.loginMember.userrole == 'user'}">
-	              			<p class="btn btn-primary">결제 미완료</p>
-	              		</div>
-              		</div>
-              		<div th:if="${session.loginMember == null}">
-	              		<div th:if="${payment == null}">
-	              			<p class="btn btn-primary">결제 미완료</p>
-	              		</div>
-              		</div>
+              	<div th:if="${session.loginMember != null}">
+	              	<div th:if="${payment == null and session.loginMember.userrole == 'user'}">
+	              		<p class="btn btn-primary">결제 미완료</p>
+	              	</div>
+              	</div>
+              	<div th:if="${session.loginMember == null}">
+	              	<div th:if="${payment == null}">
+	              		<p class="btn btn-primary">결제 미완료</p>
+	              	</div>
+              	</div>
               		
               </form>
             </div>
@@ -239,7 +242,7 @@
 		  <th:block th:if="${participant != null && #lists.size(participant) != 0}">
 	          <div class="row mb-3">
 		            <div class="col-auto text-center text-sm" th:each="listdata : ${participant}">
-		            	<img class="avatar avatar-border-white mb-1" th:src="@{${'/img/avatar/'+listdata.userimage}}" alt="프로필오류"><br th:text="${listdata.username}">
+		            	<img class="avatar avatar-border-white mb-1" th:src="@{${listdata.userimage}}" alt="test"><br th:text="${listdata.username}">
 		            </div>
 	          </div>
           </th:block>
@@ -334,7 +337,7 @@
 		<th:block th:if="${session.loginMember!=null}">
 	        <div class="text-block d-print-none" th:if="${auth == 1} or ${session.loginMember.userrole == 'admin'}">
 	          <button class="btn btn-link ps-0" onclick="window.print()"><i class="fa fa-print me-2"></i>출력하기 </button>
-	          <button class="btn btn-link ps-0"><i class="fa fa-map-pin me-2"></i>공유하기 </button>
+	          <button class="btn btn-link ps-0" onclick="copy()"><i class="fa fa-map-pin me-2"></i>공유하기 </button>
 	          <th:block th:if="${session.loginMember!=null} and ${camp.cstatus == 0} and (${session.loginMember.userno == organizer.userno} or ${session.loginMember.userrole == 'admin'})">
 		          <a th:href="@{/camping/camping-edit(cid=${camp.cid}, siteid=${camp.siteid})}">
 		          <button class="btn btn-link ps-0">
@@ -371,13 +374,20 @@
 		          	<button class="btn btn-primary" type="submit">여행 재시작하기 </button>
 		          </li>
 	          </form>
+	          
+	          <div class="text-block d-print-none mt-2" th:if="${session.loginMember!=null} and ${auth == 0}">
+	          	<form action="/camping/registerCamping" method="post">
+	          		<input type="hidden" th:value="${camp.cid}" name="cid"/>
+	          		<input type="hidden" th:value="${camp.siteid}" name="siteid"/>
+	          		<input type="hidden" th:value="${session.loginMember.userno}" name="userno"/>
+	          		<button class="btn btn-primary">여행 가입하기 </button>
+	          	</form>
+        		
+        	  </div>
 	        </div>
         </th:block>
         
-        <div class="text-block d-print-none" th:if="${session.loginMember!=null} and ${auth == 0}">
-        	<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-lg-none d-xl-inline-block"><a class="btn btn-primary"
-              href="user-add-0.html">여행 가입하기 </a></li>
-        </div>
+        
         
       </div>
       
@@ -466,6 +476,25 @@
 	// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
 	function closeOverlay() {
 	    overlay.setMap(null);     
+	}
+	</script>
+	
+	<script>
+	function copy(){
+		const currentUrl = window.location.href;
+
+		const copyToClipboard = (text) => {
+		    const textarea = document.createElement('textarea');
+		    textarea.value = text;
+		    document.body.appendChild(textarea);
+		    textarea.select();
+		    document.execCommand('copy');
+		    document.body.removeChild(textarea);
+		};
+
+		copyToClipboard(currentUrl);
+
+		alert('클립보드에 복사되었습니다');
 	}
 	</script>
 	
