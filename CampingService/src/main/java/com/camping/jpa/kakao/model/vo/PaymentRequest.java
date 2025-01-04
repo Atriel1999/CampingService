@@ -39,14 +39,14 @@ public class PaymentRequest {
 	public Date created_at;
 	
 	@OneToOne
-	@JoinColumn(name = "cid")
+	@JoinColumn(name = "fkcid")
 	private CampingList campinglist;
 	
 	@OneToOne
-	@JoinColumn(name = "userno")
+	@JoinColumn(name = "fkuserno")
 	private User user;
 	
 	@OneToOne
-	@JoinColumn(name = "siteid")
+	@JoinColumn(name = "fksiteid")
 	private CampingSite siteid;
 }

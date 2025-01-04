@@ -38,10 +38,10 @@ public class CampingMember {
 	public int caauth; 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cid")
+	@JoinColumn(name = "fkcid")
 	public CampingList campinglist;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userno")
+	@JoinColumn(name = "fkuserno")
 	public User userlist;
 }

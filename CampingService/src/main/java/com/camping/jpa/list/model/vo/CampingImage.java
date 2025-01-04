@@ -24,7 +24,7 @@ public class CampingImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CIID")
 	public int ciid;
-	@Column(name = "CID")
+	@Column(name = "FKCID")
 	public int cid;
 	@Column(name = "CIIMAGE")
 	public String ciimage;

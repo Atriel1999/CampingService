@@ -45,7 +45,7 @@ public class CampingReview {
 	public Double crrating;
 	
 	@ManyToOne
-	@JoinColumn(name = "CID")
+	@JoinColumn(name = "FKCID")
 	private CampingList campinglist;
 	
 }

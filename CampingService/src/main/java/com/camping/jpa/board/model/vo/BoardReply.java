@@ -25,7 +25,7 @@ public class BoardReply {
 	@Id
 	@Column(name = "RID")
 	public int rid;      
-	@Column(name = "BID")
+	@Column(name = "FKBID")
 	public int bid;      
 	
 	@Column(name = "RCONTENT")

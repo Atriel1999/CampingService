@@ -37,6 +37,6 @@ public class PaymentApprove {
 	public int vat;
 	
 	@OneToOne
-	@JoinColumn(name = "tid")
+	@JoinColumn(name = "fktid")
 	private PaymentRequest paymentrequest;
 }

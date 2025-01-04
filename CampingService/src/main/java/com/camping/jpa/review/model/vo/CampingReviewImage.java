@@ -25,7 +25,7 @@ public class CampingReviewImage {
 	@Column(name = "CRIID")
 	public int criid;
 	
-	@Column(name = "CRID")
+	@Column(name = "FKCRID")
 	public int crid;
 	
 	@Column(name = "CRIIMAGE")

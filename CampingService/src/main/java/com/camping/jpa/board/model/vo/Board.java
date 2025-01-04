@@ -44,6 +44,6 @@ public class Board {
 	public int bcategory;
 	
 	@OneToOne
-	@JoinColumn(name = "USERNO")
+	@JoinColumn(name = "FKUSERNO")
 	private User userlist;
 }

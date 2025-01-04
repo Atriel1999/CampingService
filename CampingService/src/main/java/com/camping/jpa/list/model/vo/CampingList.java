@@ -30,7 +30,7 @@ public class CampingList {
 	@Id
 	@Column(name = "CID")
 	public int cid;		// 캠핑고유번호
-	@Column(name = "SITEID")
+	@Column(name = "FKSITEID")
 	public int siteid;		// 캠핑장이름
 	@Column(name = "CNAME")
 	public String cname;        // 캠핑이름
