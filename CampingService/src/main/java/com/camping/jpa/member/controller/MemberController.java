@@ -76,7 +76,7 @@ public class MemberController {
 				User loginMember = service.loginKaKao(kakaoToken);
 				
 				String prevPage = (String) request.getAttribute("prevPage");  //request.getSession().getAttribute("prevPage");
-		        if (prevPage != null) {
+		        if (prevPage == null) {
 //		            request.getSession().removeAttribute("prevPage");
 		        	prevPage = "http://www.atrielcamping.com/home";
 		        }
