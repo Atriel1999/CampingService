@@ -68,7 +68,7 @@ public class MemberController {
 		log.info("로그인 요청");
 		if(code != null) {
 			try {
-				String loginUrl = "http://atrielcamping/outh2/login/kakao";
+				String loginUrl = "http://atrielcamping.com/outh2/login/kakao";
 				String token = kakaoService.getToken(code, loginUrl);
 				Map<String, Object> map = kakaoService.getUserInfo(token);
 				String kakaoToken = (String) map.get("id");
@@ -114,7 +114,7 @@ public class MemberController {
 		log.info("가입 페이지 요청");
 		if(code != null) {
 			try {
-				String enrollUrl = "http://atrielcamping/outh2/enroll/kakao";
+				String enrollUrl = "http://atrielcamping.com/outh2/enroll/kakao";
 				System.out.println("code : " + code);
 				String token = kakaoService.getToken(code, enrollUrl);
 				System.out.println("token : " + token);
