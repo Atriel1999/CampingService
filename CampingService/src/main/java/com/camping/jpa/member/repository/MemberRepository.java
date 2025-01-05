@@ -18,7 +18,10 @@ public interface MemberRepository extends JpaRepository<User, String> {
 //	User selectUser(String userno);
 	User findByUserno(String userno);
 	User findByUsername(String username);
-	User findByKakaotoken(String kakaotoken);
+	
+	@Query("SELECT u FROM USER u"
+			+ " WHERE u.kakaotoken = kakaotoken LIMIT 1")
+	User findByKakaotoken(@Param("kakaotoken") String kakaotoken);
 	
 	@Query("SELECT u FROM USER u"
 			+ " WHERE u.username like CONCAT('%',:username,'%')")
