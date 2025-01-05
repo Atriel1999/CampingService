@@ -18,7 +18,7 @@ public interface CampingReviewRepository extends JpaRepository<CampingReview, In
 			+ " WHERE c.cid = :cid")
 	List<CampingReview> findByCid(@Param("cid") int cid);
 	
-	@Query(value = "select * from CAMP_REVIEW r"
+	@Query(value = "select * from camp_review r"
 			+ " ORDER BY RAND()"
 			+ " LIMIT 3", nativeQuery = true)
 	List<CampingReview> findReviewByTop3();
