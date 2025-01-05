@@ -20,7 +20,7 @@ public interface MemberRepository extends JpaRepository<User, String> {
 	User findByUsername(String username);
 	
 	@Query("SELECT u FROM USER u"
-			+ " WHERE u.kakaotoken = kakaotoken LIMIT 1")
+			+ " WHERE u.kakaotoken = kakaotoken")
 	User findByKakaotoken(@Param("kakaotoken") String kakaotoken);
 	
 	@Query("SELECT u FROM USER u"
