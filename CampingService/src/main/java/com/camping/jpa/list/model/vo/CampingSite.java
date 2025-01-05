@@ -26,7 +26,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CAMPING_SITE")
-@ToString(exclude= {"campinglist"})
 @Transactional
 public class CampingSite {
 	@Id

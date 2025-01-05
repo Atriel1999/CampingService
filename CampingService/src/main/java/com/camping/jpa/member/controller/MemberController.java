@@ -56,7 +56,8 @@ public class MemberController {
 		String uri = request.getHeader("Referer");
 	    if (uri != null && !uri.contains("/login")) {
 	    	log.info("dbg1111 uri:" + uri);
-	        request.getSession().setAttribute("prevPage", uri);
+//	        request.getSession().setAttribute("prevPage", uri);
+	    	request.setAttribute("prevPage", uri);
 	    }
 		
 		return "login/login";
@@ -74,9 +75,10 @@ public class MemberController {
 				String kakaoToken = (String) map.get("id");
 				User loginMember = service.loginKaKao(kakaoToken);
 				
-				String prevPage = (String) request.getSession().getAttribute("prevPage");
+				String prevPage = (String) request.getAttribute("prevPage");  //request.getSession().getAttribute("prevPage");
 		        if (prevPage != null) {
-		            request.getSession().removeAttribute("prevPage");
+//		            request.getSession().removeAttribute("prevPage");
+		        	request.removeAttribute("prevPage");
 		        }
 				
 				if(loginMember != null) { // 로그인 성공
