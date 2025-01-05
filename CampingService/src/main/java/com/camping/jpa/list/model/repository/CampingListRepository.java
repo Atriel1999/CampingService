@@ -41,13 +41,13 @@ public interface CampingListRepository extends JpaRepository<CampingList, Intege
 	
 	CampingSite findBySiteid(int siteid);
 	
-	@Query(value = "select * from CAMPING c"
+	@Query(value = "select * from camping c"
 			+ " ORDER BY RAND()"
 			+ " LIMIT 5", nativeQuery = true)
 	List<CampingList> findByTop5();
 	
 	@Modifying
-	@Query("UPDATE CAMPING c SET c.cstatus = :status"
+	@Query("UPDATE camping c SET c.cstatus = :status"
 			+ " WHERE c.cid = :cid")
 	int setStatusCamping(@Param("cid") int cid, @Param("status") int status);
 	

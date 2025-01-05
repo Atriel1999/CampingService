@@ -39,7 +39,7 @@ public class HomeController {
 		List<Board> board = boardservice.findBoardByTop6();
 		List<Board> notice = boardservice.findNoticeByTop6();
 		
-		log.info("dbg1: " + board);
+		log.info("dbg1: " + review);
 		
 		model.addAttribute("camp", camp);
 		model.addAttribute("review", review);

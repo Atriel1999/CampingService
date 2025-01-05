@@ -42,13 +42,13 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 			+ " WHERE b.bid = :bid")
 	int updateBreadcount(@Param("bid") int bid);
 	
-	@Query(value = "select * from BOARD b"
+	@Query(value = "select * from board b"
 			+ " WHERE b.bcategory != 1"
 			+ " ORDER BY bcreatedate DESC"
 			+ " LIMIT 6", nativeQuery = true)
 	List<Board> findBoardByTop6();
 	
-	@Query(value = "select * from BOARD b"
+	@Query(value = "select * from board b"
 			+ " WHERE b.bcategory = 1"
 			+ " ORDER BY bcreatedate DESC"
 			+ " LIMIT 6", nativeQuery = true)
