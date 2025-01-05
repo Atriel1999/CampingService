@@ -47,7 +47,7 @@ public interface CampingListRepository extends JpaRepository<CampingList, Intege
 	List<CampingList> findByTop5();
 	
 	@Modifying
-	@Query("UPDATE camping c SET c.cstatus = :status"
+	@Query("UPDATE CAMPING c SET c.cstatus = :status"
 			+ " WHERE c.cid = :cid")
 	int setStatusCamping(@Param("cid") int cid, @Param("status") int status);
 	
