@@ -78,7 +78,7 @@ public class MemberController {
 				String prevPage = (String) request.getAttribute("prevPage");  //request.getSession().getAttribute("prevPage");
 		        if (prevPage != null) {
 //		            request.getSession().removeAttribute("prevPage");
-		        	request.removeAttribute("prevPage");
+		        	prevPage = "http://www.atrielcamping.com/home";
 		        }
 				
 				if(loginMember != null) { // 로그인 성공
@@ -86,6 +86,7 @@ public class MemberController {
 					System.out.println("listdbg2(loginMember): " + loginMember);
 					
 					log.info("dbg2222: " + prevPage);
+					log.info("dbg3333: " + request);
 					
 					model.addAttribute("msg", "로그인에 성공하였습니다.");
 					model.addAttribute("uri", prevPage);
