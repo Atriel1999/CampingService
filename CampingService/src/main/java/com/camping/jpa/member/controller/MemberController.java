@@ -25,6 +25,7 @@ import com.camping.jpa.list.model.vo.User;
 import com.camping.jpa.member.model.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,8 +57,8 @@ public class MemberController {
 		String uri = request.getHeader("Referer");
 	    if (uri != null && !uri.contains("/login")) {
 	    	log.info("dbg1111 uri:" + uri);
-//	        request.getSession().setAttribute("prevPage", uri);
-	    	request.setAttribute("prevPage", uri);
+	        request.getSession().setAttribute("prevPage", uri);
+//	    	request.setAttribute("prevPage", uri);
 	    }
 		
 		return "login/login";
@@ -74,8 +75,8 @@ public class MemberController {
 				Map<String, Object> map = kakaoService.getUserInfo(token);
 				String kakaoToken = (String) map.get("id");
 				User loginMember = service.loginKaKao(kakaoToken);
-				
-				String prevPage = (String) request.getAttribute("prevPage");  //request.getSession().getAttribute("prevPage");
+								
+				String prevPage = (String) request.getSession().getAttribute("prevPage");  //request.getSession().getAttribute("prevPage");
 		        if (prevPage == null) {
 //		            request.getSession().removeAttribute("prevPage");
 		        	prevPage = "http://www.atrielcamping.com/home";
