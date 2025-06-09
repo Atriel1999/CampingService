@@ -1,0 +1,11 @@
+#!/bin/bash
+GITHUB_ID="Atriel1999"
+PROJECT_NAME="CampingService"
+PROJECT_VERSION="0.0.1-SNAPSHOT"
+PROJECT_PID="$(pgrep -f ${PROJECT_NAME}-${PROJECT_VERSION}.jar)"
+JAR_PATH="/home/${PROJECT_NAME}/CampingService/build/libs/${PROJECT_NAME}-${PROJECT_VERSION}.jar"
+export GITHUB_ID
+export PROJECT_NAME
+export PROJECT_VERSION
+export PROJECT_PID
+export JAR_PATH
